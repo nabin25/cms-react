@@ -1,9 +1,11 @@
 import "./App.css";
+import ThemeToggler from "./components/ui/ThemeToggler";
 
 function App() {
   return (
     <>
-      <p className="">Hello world</p>
+      <p className="dark:text-red-300 text-black">Home page</p>
+      <ThemeToggler />
     </>
   );
 }
