@@ -7,7 +7,9 @@ const ProtectedRoute = () => {
   return token && user ? (
     <>
       <Navbar />
-      <Outlet />
+      <div className="pt-18 px-10">
+        <Outlet />
+      </div>
     </>
   ) : (
     <Navigate to="/auth/sign-in" />

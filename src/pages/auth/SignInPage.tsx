@@ -12,6 +12,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "../../components/ui/form";
 import { Navigate } from "react-router-dom";
 
@@ -48,45 +49,53 @@ const SignInPage = () => {
   };
   return (
     <>
-      <div className="max-w-[500px]">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-5"
-          >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your Email" {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="max-w-[500px] md:min-w-[500px] sm:w-full">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-5"
+            >
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your Email" {...field} />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.email?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter your password"
-                      {...field}
-                      type="password"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your password"
+                        {...field}
+                        type="password"
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.password?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
 
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
+        </div>
       </div>
     </>
   );
