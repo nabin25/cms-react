@@ -1,27 +1,27 @@
-import type { ReactNode } from "react";
-import { useContext } from "react";
-import { default as ReactSelect } from "react-select";
-import type { Props as ReactSelectProps } from "react-select";
+import { useContext, type ReactNode } from "react";
+import {
+  default as ReactSelect,
+  type CreatableProps,
+} from "react-select/creatable";
+import type { GroupBase } from "react-select";
 import { ThemeContext } from "../../../providers/ThemeProvider";
 
-export interface ColourOption extends ReactSelectProps {
-  label: ReactNode | string;
-  value?: any;
-  onChange?: (selected: any) => void;
-  className: string;
-  error: any;
-  isClearable?: boolean;
-  placeholder?: string;
-  disabled?: boolean;
+export interface Option {
+  label: string;
+  value: string;
+  __isNew__?: string;
 }
 
-const SelectComponent = ({
-  label,
-  placeholder,
-  disabled = false,
-  isClearable,
-  ...props
-}: ColourOption) => {
+export interface ColourOption
+  extends CreatableProps<Option, true, GroupBase<Option>> {
+  label?: ReactNode;
+  error?: string;
+  className?: string;
+  value?: any;
+  onChange?: (selected: any) => void;
+}
+
+const CreatableSelect = ({ label, ...props }: ColourOption) => {
   const themeContext = useContext(ThemeContext);
 
   const getBorderColor = (theme: string | undefined) => {
@@ -42,8 +42,8 @@ const SelectComponent = ({
     control: (provided: any, state: any) => ({
       ...provided,
       minHeight: "40px",
+      fontSize: "13px",
 
-      fontSize: "14px",
       borderColor: props.error
         ? "red"
         : state.isFocused
@@ -70,30 +70,24 @@ const SelectComponent = ({
       ...base,
       color: themeContext?.theme === "dark" ? "white" : "black",
     }),
-    option: (styles: any) => {
-      return {
-        ...styles,
-        color: themeContext?.theme === "dark" ? "#aaa" : "#333",
-      };
-    },
+    option: (styles: any) => ({
+      ...styles,
+      color: themeContext?.theme === "dark" ? "#aaa" : "#333",
+    }),
   };
 
   return (
     <div className="flex flex-col flex-1 gap-1.5">
       {label}
       <ReactSelect
-        isDisabled={disabled}
         {...props}
-        //@ts-ignore
-        menuPortalTarget={typeof window !== "undefined" && document.body}
-        menuPosition="fixed"
-        isClearable={isClearable}
         styles={customStyles}
-        placeholder={placeholder}
+        menuPortalTarget={document.body}
+        menuPosition="fixed"
+        isMulti
       />
       <p className="text-red-600">{props.error}</p>
     </div>
   );
 };
-
-export default SelectComponent;
+export default CreatableSelect;

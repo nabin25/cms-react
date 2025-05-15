@@ -17,6 +17,7 @@ import {
 import { Input } from "../ui/input";
 import QuillEditor from "./quill/QuillEditor";
 import SelectComponent from "./select/SelectComponent";
+import CreatableSelect from "./select/CreatableSelect";
 
 interface FormComponentProps {
   register: UseFormRegister<FormInputType>;
@@ -97,6 +98,42 @@ const FormComponent = ({
               onChange={(selected: any) => {
                 onChange(selected?.value);
               }}
+              error={errors[formItem.name]?.message}
+            />
+          )}
+        />
+      )}
+      {formItem.type === "creatable-select" && (
+        <Controller
+          name={formItem?.name}
+          control={control}
+          render={({ field: { value = null, onChange } }) => (
+            <CreatableSelect
+              className="flex flex-1 flex-col !h-full min-w-60"
+              options={formItem.options || [{ label: "", value: "" }]}
+              label={
+                <p className="flex font-medium dark:text-white items-center gap-2">
+                  {formItem.label}{" "}
+                  {formItem.optional ? (
+                    ""
+                  ) : (
+                    <span className="text-red-500">*</span>
+                  )}
+                </p>
+              }
+              menuPortalTarget={document.body}
+              onChange={(selected: any) => {
+                onChange(selected);
+              }}
+              onCreateOption={(input: string) => {
+                const tempData = { label: input, value: input };
+                //@ts-ignore
+                const newValues = value ? [...value, tempData] : [tempData];
+                onChange(newValues);
+                formItem?.setOptions &&
+                  formItem?.setOptions((prev) => [...prev, tempData]);
+              }}
+              value={value}
               error={errors[formItem.name]?.message}
             />
           )}
