@@ -1,6 +1,11 @@
 type FormInputType = { [key: string]: string | number | null | undefined };
 
-import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  Controller,
+  type Control,
+  type FieldErrors,
+  type UseFormRegister,
+} from "react-hook-form";
 import type { IFormItem } from "../../types/form";
 import {
   FormControl,
@@ -10,6 +15,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import QuillEditor from "./quill/QuillEditor";
 
 interface FormComponentProps {
   register: UseFormRegister<FormInputType>;
@@ -49,6 +55,30 @@ const FormComponent = ({
           )}
         />
       )}
+      {
+        //Quill Component
+        formItem?.type === "quill" && (
+          <Controller
+            name={formItem?.name}
+            control={control}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <QuillEditor
+                //@ts-ignore
+                value={value}
+                onChange={onChange}
+                label={
+                  <p>
+                    {formItem?.label}{" "}
+                    {!formItem?.optional && (
+                      <span className="text-red-500">*</span>
+                    )}
+                  </p>
+                }
+              />
+            )}
+          />
+        )
+      }
     </>
   );
 };

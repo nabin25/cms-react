@@ -35,6 +35,14 @@ const HomePage = () => {
       type: "text",
       colSize: 12,
     },
+    {
+      ariaLabel: "Quill Field",
+      name: "Quill Field",
+      label: "Quill field",
+      placeholder: "Enter your content ...",
+      type: "quill",
+      colSize: 12,
+    },
   ];
   return (
     <>

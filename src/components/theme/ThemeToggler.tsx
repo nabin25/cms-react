@@ -8,7 +8,7 @@ const ThemeToggler = () => {
   return (
     <>
       <button
-        className="w-10 h-10 flex justify-center items-center rounded-md bg-gray-200 dark:bg-gray-600"
+        className="w-10 h-10 flex justify-center items-center rounded-md bg-gray-200 dark:bg-gray-600 hover:cursor-pointer"
         onClick={() => theme?.toggleTheme()}
       >
         {theme?.theme === "dark" ? (
