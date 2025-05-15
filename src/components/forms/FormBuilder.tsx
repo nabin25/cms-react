@@ -17,6 +17,24 @@ import type { IFormItem } from "../../types/form";
 import { cn } from "../../lib/utils";
 import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
 
+const getColSize = (colSize?: number) => {
+  switch (colSize) {
+    case 2:
+      return "col-span-2";
+    case 3:
+      return "col-span-3";
+    case 4:
+      return "col-span-4";
+    case 6:
+      return "col-span-6";
+    case 8:
+      return "col-span-8";
+    case 12:
+      return "col-span-12";
+    default:
+      "col-span-12";
+  }
+};
 interface IFormBuilderProps {
   register: UseFormRegister<FormInputType>;
   errors: FieldErrors<FormInputType>;
@@ -28,7 +46,7 @@ interface IFormBuilderProps {
   getValues: UseFormGetValues<any>;
   children?: React.ReactNode;
   isLoading?: boolean;
-  type: "edit" | "delete";
+  type: "edit" | "create";
 }
 
 const FormBuilder = ({
@@ -56,13 +74,7 @@ const FormBuilder = ({
     <form onSubmit={handleSubmit(handleSubmitConfirmation)}>
       <div className="lg:grid lg:grid-cols-12 gap-4 mb-6">
         {fields.map((singleField, fieldIndex) => (
-          <div
-            key={fieldIndex}
-            className={cn(
-              "col-span-12",
-              `col-span-${singleField.colSize ?? 12}`
-            )}
-          >
+          <div key={fieldIndex} className={cn(getColSize(singleField.colSize))}>
             <FormComponent
               key={fieldIndex}
               register={register}

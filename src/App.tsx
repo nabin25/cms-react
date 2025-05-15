@@ -5,11 +5,9 @@ import { ThemeProvider } from "./providers/ThemeProvider";
 import AuthProvider from "./providers/AuthProvider";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SignInPage from "./pages/auth/SignInPage";
-import { Button } from "./components/ui/button";
-import { useConfirmationModalStore } from "./stores/useConfirmationModalStore";
+import HomePage from "./pages/dashboard/HomePage";
 
 function App() {
-  const { open, close } = useConfirmationModalStore();
   return (
     <>
       <BrowserRouter>
@@ -18,23 +16,7 @@ function App() {
             <AuthProvider>
               <Routes>
                 <Route element={<ProtectedRoute />}>
-                  <Route
-                    path="/"
-                    element={
-                      <p>
-                        <Button
-                          onClick={() => {
-                            open(() => {
-                              console.log("hello");
-                              close();
-                            });
-                          }}
-                        >
-                          Click
-                        </Button>
-                      </p>
-                    }
-                  />
+                  <Route path="/" element={<HomePage />} />
                 </Route>
                 <Route path="auth/sign-in" element={<SignInPage />}></Route>
               </Routes>
