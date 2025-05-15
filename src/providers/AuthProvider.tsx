@@ -1,4 +1,3 @@
-"use client";
 import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";

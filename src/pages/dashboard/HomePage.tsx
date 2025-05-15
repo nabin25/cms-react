@@ -37,11 +37,23 @@ const HomePage = () => {
     },
     {
       ariaLabel: "Quill Field",
-      name: "Quill Field",
+      name: "quill_ield",
       label: "Quill field",
       placeholder: "Enter your content ...",
       type: "quill",
       colSize: 12,
+    },
+    {
+      ariaLabel: "Select Field",
+      name: "select_field",
+      label: "Select Field",
+      placeholder: "Select options ...",
+      type: "select",
+      colSize: 6,
+      options: [
+        { label: "one", value: "one" },
+        { label: "two", value: "two" },
+      ],
     },
   ];
   return (

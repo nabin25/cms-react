@@ -11,4 +11,5 @@ export type IFormItem = {
   ariaLabel: string;
   colSize?: 2 | 3 | 4 | 6 | 8 | 12;
   optional?: boolean;
+  options?: IOption[];
 };

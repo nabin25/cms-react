@@ -27,9 +27,9 @@ export default function QuillEditor({
       [{ script: "sub" }, { script: "super" }],
       [{ indent: "-1" }, { indent: "+1" }],
       [{ color: [] }, { background: [] }],
-      [{ font: [] }],
       [{ align: [] }],
       ["clean"],
+      [{ font: [] }],
     ],
   };
 

@@ -72,7 +72,7 @@ const FormBuilder = ({
 
   return (
     <form onSubmit={handleSubmit(handleSubmitConfirmation)}>
-      <div className="lg:grid lg:grid-cols-12 gap-4 mb-6">
+      <div className="lg:grid lg:grid-cols-12 gap-4 mb-6 gap-y-4">
         {fields.map((singleField, fieldIndex) => (
           <div key={fieldIndex} className={cn(getColSize(singleField.colSize))}>
             <FormComponent
@@ -97,6 +97,7 @@ const FormBuilder = ({
         </Button>
         <Button
           variant="outline"
+          type="button"
           onClick={() => reset()}
           className="py-1 flex items-center justify-center gap-1"
         >
