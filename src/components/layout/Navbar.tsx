@@ -1,0 +1,45 @@
+import { useAuth } from "../../providers/AuthProvider";
+import ThemeToggler from "../theme/ThemeToggler";
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+
+const Navbar = () => {
+  const { user, logout } = useAuth();
+  return (
+    <>
+      <nav className="bg-white/30 dark:bg-black/30 backdrop-blur-md text-white p-4 fixed w-full top-0 left-0 z-10 px-10">
+        <div className="w-full flex justify-between items-centers">
+          <div className="flex items-center">
+            <div className="text-xl font-bold text-black dark:text-white">
+              SpellCMS
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-6">
+            <ThemeToggler />
+            <Popover>
+              <PopoverTrigger asChild>
+                <img
+                  src={user?.avatar}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              </PopoverTrigger>
+              <PopoverContent className="">
+                <ul>
+                  <li>{user?.full_name}</li>
+                  <li>{user?.email}</li>
+                  <Button onClick={() => logout()} color="danger">
+                    Log out
+                  </Button>
+                </ul>
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
+};
+
+export default Navbar;
