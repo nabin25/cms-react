@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../providers/AuthProvider";
 import Navbar from "../components/layout/Navbar";
+import { ConfirmationModal } from "../components/modals/ConfirmationModal";
 
 const ProtectedRoute = () => {
   const { token, user } = useAuth();
@@ -9,6 +10,7 @@ const ProtectedRoute = () => {
       <Navbar />
       <div className="pt-18 px-10">
         <Outlet />
+        <ConfirmationModal />
       </div>
     </>
   ) : (
