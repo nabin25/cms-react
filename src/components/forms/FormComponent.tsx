@@ -19,6 +19,7 @@ import QuillEditor from "./quill/QuillEditor";
 import SelectComponent from "./select/SelectComponent";
 import CreatableSelect from "./select/CreatableSelect";
 import { Textarea } from "../ui/textarea";
+import { Trash2 } from "lucide-react";
 
 interface FormComponentProps {
   register: UseFormRegister<FormInputType>;
@@ -33,10 +34,9 @@ const FormComponent = ({
   control,
   formItem,
 }: FormComponentProps) => {
-  //   console.log(register, errors, control, formItem);
   return (
     <div className="mb-2">
-      {formItem?.type === "text" && (
+      {formItem?.type === "image" && (
         <FormField
           control={control}
           name={formItem?.name}
@@ -46,6 +46,19 @@ const FormComponent = ({
                 {formItem.label}{" "}
                 {!formItem?.optional && <span className="text-red-500">*</span>}
               </FormLabel>
+              <div className="relative aspect-square w-32 group hover:ring-1 ring-accent transition">
+                <img
+                  alt="image"
+                  className="object-contain"
+                  src={field.value?.toString() ?? ""}
+                />
+                {field?.value && (
+                  <Trash2
+                    onClick={() => field.onChange(null)}
+                    className="text-red-600 absolute right-2 top-2 text-body cursor-pointer hidden group-hover:flex transition"
+                  />
+                )}
+              </div>
               <FormControl>
                 <Input
                   placeholder={formItem?.placeholder ?? "Enter text..."}
@@ -159,6 +172,28 @@ const FormComponent = ({
               value={value}
               error={errors[formItem.name]?.message}
             />
+          )}
+        />
+      )}
+      {formItem?.type === "text" && (
+        <FormField
+          control={control}
+          name={formItem?.name}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {formItem.label}{" "}
+                {!formItem?.optional && <span className="text-red-500">*</span>}
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={formItem?.placeholder ?? "Enter text..."}
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage>{errors[formItem.name]?.message}</FormMessage>
+            </FormItem>
           )}
         />
       )}

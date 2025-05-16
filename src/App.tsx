@@ -7,6 +7,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import SignInPage from "./pages/auth/SignInPage";
 import HomePage from "./pages/dashboard/HomePage";
 import AuthorsPage from "./pages/dashboard/AuthorsPage";
+import CategoryPage from "./pages/dashboard/CategoryPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
                 <Route element={<ProtectedRoute />}>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/authors" element={<AuthorsPage />} />
+                  <Route path="/categories" element={<CategoryPage />} />
                 </Route>
                 <Route path="auth/sign-in" element={<SignInPage />}></Route>
               </Routes>

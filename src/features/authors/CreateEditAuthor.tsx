@@ -2,43 +2,18 @@ import { useForm } from "react-hook-form";
 import FormBuilder from "../../components/forms/FormBuilder";
 import type { IAuthor } from "../../types/author";
 import { Form } from "../../components/ui/form";
-import type { IFormItem } from "../../types/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authorSchema, type AuthorType } from "../../schemas/author.schema";
 import useCreateAuthor from "../../api/authors/useCreateAuthor";
 import { useModalStore } from "../../stores/useModalStore";
 import useEditAuthor from "../../api/authors/useEditAuthor";
+import useAuthorFormData from "../../hooks/useAuthorFormData";
 
 const CreateEditAuthor = ({ authorData }: { authorData?: IAuthor }) => {
   const { close } = useModalStore();
   const isCreateAuthor = !authorData;
 
-  const fields: IFormItem[] = [
-    {
-      ariaLabel: "name",
-      name: "name",
-      label: "Author Name",
-      placeholder: "Enter author name...",
-      type: "text",
-      colSize: 12,
-    },
-    {
-      ariaLabel: "bio",
-      name: "bio",
-      label: "Bio",
-      placeholder: "Enter author bio ...",
-      type: "textarea",
-      colSize: 12,
-    },
-    {
-      ariaLabel: "image url",
-      name: "avatar",
-      label: "Avatar url",
-      placeholder: "Enter author avatar url ...",
-      type: "text",
-      colSize: 12,
-    },
-  ];
+  const { fields } = useAuthorFormData();
   const form = useForm<AuthorType>({
     resolver: zodResolver(authorSchema),
     defaultValues: {
