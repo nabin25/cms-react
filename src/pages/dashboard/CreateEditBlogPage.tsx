@@ -40,14 +40,13 @@ const CreateEditBlogPage = () => {
 
   useEffect(() => {
     if (!id) {
-      const isDraftEmpty = Object.entries(draft).every(([key, value]) => {
-        if (key === "content") return !value || value.length < 10;
-        if (typeof value === "string") return value.trim() === "";
-        if (Array.isArray(value)) return value.length === 0;
-        return !value;
-      });
+      const isDraftNonEmpty =
+        (draft?.content && draft?.content.length > 20) ||
+        (draft?.title && draft?.title.length > 0) ||
+        (draft?.cover_image && draft?.cover_image.length > 0) ||
+        (Array.isArray(draft?.tags) && draft?.tags.length > 0);
 
-      if (!isDraftEmpty) {
+      if (isDraftNonEmpty) {
         open(handleDraftRecover, "draft", handleDraftClear);
       } else {
         setShouldAutoSave(true);

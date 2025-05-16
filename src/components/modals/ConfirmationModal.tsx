@@ -10,7 +10,7 @@ export const ConfirmationModal = () => {
     useConfirmationModalStore();
 
   return (
-    <Dialog open={isOpen} onOpenChange={close}>
+    <Dialog open={isOpen} onOpenChange={onClose ?? close}>
       <DialogTitle></DialogTitle>
       <DialogContent>
         <h2 className="text-lg font-semibold">
