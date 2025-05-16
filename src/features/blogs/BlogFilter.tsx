@@ -65,6 +65,7 @@ const BlogFilter = () => {
           <SheetDescription>
             <Label className="mt-2">Search By Tag</Label>
             <Input
+              placeholder="Enter tags..."
               className="mt-2"
               value={tag}
               onChange={(e) =>
@@ -77,6 +78,7 @@ const BlogFilter = () => {
 
             <Label className="mt-4">Search By Title</Label>
             <Input
+              placeholder="Enter title..."
               className="mt-2"
               value={title}
               onChange={(e) =>

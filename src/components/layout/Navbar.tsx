@@ -18,7 +18,8 @@ const Navbar = () => {
               className="text-xl font-bold text-black dark:text-white cursor-pointer"
               onClick={() => navigate("/")}
             >
-              SpellCMS
+              <span className="text-[#94288d]">Spell</span>
+              <span className="text-[#ff4504]">CMS</span>
             </div>
           </div>
 
@@ -34,9 +35,15 @@ const Navbar = () => {
               </PopoverTrigger>
               <PopoverContent className="">
                 <ul>
-                  <li>{user?.full_name}</li>
-                  <li>{user?.email}</li>
-                  <Button onClick={() => logout()} color="danger">
+                  <li className="my-2">{user?.full_name}</li>
+                  <hr />
+                  <li className="my-2">{user?.email}</li>
+                  <hr />
+                  <Button
+                    className="my-2"
+                    onClick={() => logout()}
+                    variant={"destructive"}
+                  >
                     Log out
                   </Button>
                 </ul>
