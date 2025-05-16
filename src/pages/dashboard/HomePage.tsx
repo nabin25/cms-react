@@ -7,9 +7,10 @@ import routes from "../../routes/routes";
 import { Skeleton } from "../../components/ui/skeleton";
 import BlogFilter from "../../features/blogs/BlogFilter";
 import { Plus } from "lucide-react";
+import NoDataFound from "../../components/NoDataFound";
 
 const HomePage = () => {
-  const { data, isLoading } = useFetchBlogs();
+  const { data, isLoading, isError } = useFetchBlogs();
   const [params] = useSearchParams();
   const limit = params.get("limit") ?? "10";
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const HomePage = () => {
           <BlogFilter />
         </div>
       </div>
+      {!isLoading && (isError || !data || data.length === 0) && <NoDataFound />}
       <div className="flex flex-wrap py-5 gap-5 justify-center items-center">
         {isLoading &&
           Array.from({ length: 20 }).map((_, i) => (
@@ -65,7 +67,6 @@ const HomePage = () => {
         {data &&
           data?.map((blog) => <BlogCard key={blog.id} blogData={blog} />)}
       </div>
-      {}
     </div>
   );
 };

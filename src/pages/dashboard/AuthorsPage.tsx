@@ -6,9 +6,10 @@ import { Skeleton } from "../../components/ui/skeleton";
 import AuthorCard from "../../features/authors/AuthorCard";
 import CreateEditAuthor from "../../features/authors/CreateEditAuthor";
 import { useModalStore } from "../../stores/useModalStore";
+import NoDataFound from "../../components/NoDataFound";
 
 const AuthorsPage = () => {
-  const { data, isLoading } = useFetchPaginatedAuthors();
+  const { data, isLoading, isError } = useFetchPaginatedAuthors();
   const [params] = useSearchParams();
   const { open } = useModalStore();
   const limit = params.get("limit") ?? "10";
@@ -26,7 +27,7 @@ const AuthorsPage = () => {
           Create Author
         </Button>
       </div>
-
+      {!isLoading && (isError || !data || data.length === 0) && <NoDataFound />}
       <div className="flex flex-wrap py-5 gap-5 justify-center items-center">
         {isLoading &&
           Array.from({ length: 20 }).map((_, i) => (

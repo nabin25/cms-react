@@ -6,9 +6,10 @@ import CategoryCard from "../../features/categories/CategoryCard";
 import CreateEditCategory from "../../features/categories/CreateEditCategory";
 import { useModalStore } from "../../stores/useModalStore";
 import useFetchPaginatedCategories from "../../api/categories/useFetchPaginatedCategories";
+import NoDataFound from "../../components/NoDataFound";
 
 const CategoryPage = () => {
-  const { data, isLoading } = useFetchPaginatedCategories();
+  const { data, isLoading, isError } = useFetchPaginatedCategories();
   const { open } = useModalStore();
 
   const [params] = useSearchParams();
@@ -28,6 +29,7 @@ const CategoryPage = () => {
         </Button>
       </div>
       <div className="flex justify-end py-5"></div>
+      {!isLoading && (isError || !data || data.length === 0) && <NoDataFound />}
 
       <div className="flex flex-wrap gap-5 justify-center py-5 items-center">
         {isLoading &&
