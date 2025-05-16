@@ -1,5 +1,3 @@
-type FormInputType = { [key: string]: string | number | null | undefined };
-
 import React from "react";
 import type {
   Control,
@@ -36,11 +34,11 @@ const getColSize = (colSize?: number) => {
   }
 };
 interface IFormBuilderProps {
-  register: UseFormRegister<FormInputType>;
-  errors: FieldErrors<FormInputType>;
-  control: Control<FormInputType>;
-  handleSubmit: UseFormHandleSubmit<FormInputType>;
-  onSubmit: SubmitHandler<FormInputType>;
+  register: UseFormRegister<any>;
+  errors: FieldErrors<any>;
+  control: Control<any>;
+  handleSubmit: UseFormHandleSubmit<any>;
+  onSubmit: SubmitHandler<any>;
   fields: IFormItem[];
   reset: UseFormReset<any>;
   getValues: UseFormGetValues<any>;

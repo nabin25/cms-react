@@ -12,11 +12,15 @@ import type { IAuthor } from "../../types/author";
 import { Button } from "../../components/ui/button";
 import useDeleteAuthor from "../../api/authors/useDeleteAuthor";
 import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
+import CreateEditAuthor from "./CreateEditAuthor";
+import { useModalStore } from "../../stores/useModalStore";
 
 const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
   const deleteMutation = useDeleteAuthor();
 
   const { open, close } = useConfirmationModalStore();
+
+  const { open: openModal } = useModalStore();
 
   const handleDelete = () => {
     deleteMutation.mutate(authorData.id, {
@@ -57,7 +61,15 @@ const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
       </CardContent>
       <CardFooter>
         <div className="flex w-full justify-end gap-4">
-          <Button variant="ghost">
+          <Button
+            variant="ghost"
+            onClick={() =>
+              openModal({
+                view: <CreateEditAuthor authorData={authorData} />,
+                title: "Edit Author",
+              })
+            }
+          >
             <SquarePen />
           </Button>
           <Button

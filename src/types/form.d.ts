@@ -6,7 +6,7 @@ export type IOption = {
 
 export type IFormItem = {
   name: string;
-  type: "text" | "quill" | "select" | "creatable-select" | "image";
+  type: "text" | "quill" | "select" | "creatable-select" | "image" | "textarea";
   label: string;
   placeholder?: string;
   ariaLabel: string;

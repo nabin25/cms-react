@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from "../ui/dialog";
 import { useModalStore } from "../../stores/useModalStore";
 
 export const GlobalModal = () => {
-  const { view, title, isOpen } = useModalStore();
+  const { view, title, isOpen, close } = useModalStore();
 
   return (
     <Dialog open={isOpen} onOpenChange={close}>

@@ -18,6 +18,7 @@ import { Input } from "../ui/input";
 import QuillEditor from "./quill/QuillEditor";
 import SelectComponent from "./select/SelectComponent";
 import CreatableSelect from "./select/CreatableSelect";
+import { Textarea } from "../ui/textarea";
 
 interface FormComponentProps {
   register: UseFormRegister<FormInputType>;
@@ -75,6 +76,28 @@ const FormComponent = ({
                 </p>
               }
             />
+          )}
+        />
+      )}
+      {formItem.type === "textarea" && (
+        <FormField
+          control={control}
+          name={formItem?.name}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {formItem.label}{" "}
+                {!formItem?.optional && <span className="text-red-500">*</span>}
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder={formItem?.placeholder ?? "Enter text..."}
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage>{errors[formItem.name]?.message}</FormMessage>
+            </FormItem>
           )}
         />
       )}
