@@ -35,18 +35,14 @@ const CategoryCard = ({ categoryData }: { categoryData: ICategory }) => {
   return (
     <Card className={cn("w-[350px]")}>
       <CardHeader>
-        <div className="h-40 w-full overflow-hidden flex items-center justify-center bg-gray-100 rounded-md">
+        <div className="h-40 w-full overflow-hidden flex items-center justify-center rounded-md">
           <img
             alt={categoryData.name}
             className="h-full object-contain"
             src={categoryData.image}
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = "/fallback.jpg";
-            }}
           />
         </div>
-        <CardTitle>{categoryData?.name}</CardTitle>
+        <CardTitle className="mt-2 text-center">{categoryData?.name}</CardTitle>
       </CardHeader>
       <CardFooter>
         <div className="flex w-full justify-end gap-4">
