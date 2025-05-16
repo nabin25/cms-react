@@ -8,7 +8,7 @@ export const GlobalModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={close}>
       <DialogTitle></DialogTitle>
-      <DialogContent>
+      <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-screen">
         <h2 className="text-lg font-semibold">{title}</h2>
         {view}
       </DialogContent>

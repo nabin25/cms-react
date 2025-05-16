@@ -1,0 +1,97 @@
+import { Eye, SquarePen, Trash2 } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+import { cn } from "../../lib/utils";
+import type { IAuthor } from "../../types/author";
+import { Button } from "../../components/ui/button";
+import useDeleteAuthor from "../../api/authors/useDeleteAuthor";
+import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
+import { useModalStore } from "../../stores/useModalStore";
+import { useNavigate } from "react-router-dom";
+import routes from "../../routes/routes";
+import type { IBlog } from "../../types/blog";
+import PreviewBlog from "./PreviewBlog";
+
+const BlogCard = ({ blogData }: { blogData: IBlog }) => {
+  const deleteMutation = useDeleteAuthor();
+
+  const { open, close } = useConfirmationModalStore();
+
+  const { open: openModal } = useModalStore();
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    deleteMutation.mutate(blogData.id, {
+      onSuccess: () => {
+        console.log("Blog Deleted Successfully");
+        close();
+      },
+      onError: () => {
+        console.log("Error deleting blog");
+        close();
+      },
+    });
+  };
+  const authorData: IAuthor = JSON.parse(blogData.author);
+
+  return (
+    <Card className={cn("w-[350px]")}>
+      <CardHeader>
+        <CardTitle>{blogData.title}</CardTitle>
+        <div className="flex justify-end items-center gap-2 mt-1">
+          <img
+            className="w-8 aspect-square rounded-full"
+            src={authorData.avatar}
+            alt={authorData.name}
+          />
+          <p>{authorData?.name}</p>
+        </div>
+      </CardHeader>
+      <CardContent className="h-[200px]">
+        <CardDescription>
+          <div className="h-40 w-full overflow-hidden flex items-center justify-center rounded-md">
+            <img
+              alt={blogData.title}
+              className="h-full object-contain"
+              src={blogData?.cover_image}
+            />
+          </div>
+        </CardDescription>
+      </CardContent>
+      <CardFooter>
+        <div className="flex w-full justify-end gap-4">
+          <Button
+            variant="ghost"
+            onClick={() =>
+              openModal({
+                title: blogData.title,
+                view: <PreviewBlog blogData={blogData} />,
+              })
+            }
+          >
+            <Eye />
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => navigate(routes?.blogs.edit(blogData.id))}
+          >
+            <SquarePen />
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={() => open(handleDelete, "delete")}
+          >
+            <Trash2 />
+          </Button>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
+export default BlogCard;

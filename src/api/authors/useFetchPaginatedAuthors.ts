@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
 import useCreateSecondApi from "../useCreateSecondApi";
 import type { IAuthor } from "../../types/author";
@@ -29,7 +29,6 @@ const useFetchPaginatedAuthors = () => {
   const result = useQuery({
     queryKey: ["authors", page, limit],
     queryFn: () => getAuthors({ api, page, limit }),
-    placeholderData: keepPreviousData,
   });
   return result;
 };

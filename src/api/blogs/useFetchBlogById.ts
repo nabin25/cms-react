@@ -1,6 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
 import useCreateFirstApi from "../useCreateFirstApi";
+import type { IBlog } from "../../types/blog";
 
 const getAuthors = async ({
   api,
@@ -8,7 +9,7 @@ const getAuthors = async ({
 }: {
   api: AxiosInstance;
   id?: string;
-}): Promise<any> => {
+}): Promise<IBlog | null> => {
   if (!id) {
     return null;
   }

@@ -1,94 +1,57 @@
-import { useForm } from "react-hook-form";
-import FormBuilder from "../../components/forms/FormBuilder";
-import { Form } from "../../components/ui/form";
-import type { IFormItem } from "../../types/form";
-import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import useFetchBlogs from "../../api/blogs/useFetchBlogs";
+import PaginationComponent from "../../components/pagination/PaginationComponent";
+import BlogCard from "../../features/blogs/BlogCard";
+import { Button } from "../../components/ui/button";
+import routes from "../../routes/routes";
+import { Skeleton } from "../../components/ui/skeleton";
 
 const HomePage = () => {
-  const form = useForm();
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
-
-  const [options, setOptions] = useState([
-    { label: "one", value: "one" },
-    { label: "two", value: "two" },
-  ]);
-
-  const fields: IFormItem[] = [
-    {
-      name: "field_one",
-      label: "Field One",
-      placeholder: "Field one ...",
-      type: "text",
-      colSize: 4,
-    },
-    {
-      name: "field_two",
-      label: "Field two",
-      placeholder: "Field two ...",
-      type: "text",
-      colSize: 8,
-    },
-    {
-      name: "field_three",
-      label: "Field three",
-      placeholder: "Field three ...",
-      type: "text",
-      colSize: 12,
-    },
-    {
-      name: "quill_ield",
-      label: "Quill field",
-      placeholder: "Enter your content ...",
-      type: "quill",
-      colSize: 12,
-    },
-    {
-      name: "select_field",
-      label: "Select Field",
-      placeholder: "Select options ...",
-      type: "select",
-      colSize: 6,
-      options: [
-        { label: "one", value: "one" },
-        { label: "two", value: "two" },
-      ],
-    },
-    {
-      name: "quill_ield",
-      label: "Quill field",
-      placeholder: "Enter your content ...",
-      type: "quill",
-      colSize: 12,
-    },
-    {
-      name: "creatable_select",
-      label: "Select Field",
-      placeholder: "Select options ...",
-      type: "creatable-select",
-      colSize: 6,
-      options: options,
-      setOptions: setOptions,
-    },
-  ];
+  const { data, isLoading } = useFetchBlogs();
+  const [params] = useSearchParams();
+  const limit = params.get("limit") ?? "10";
+  const navigate = useNavigate();
   return (
-    <>
-      <Form {...form}>
-        <FormBuilder
-          control={form.control}
-          errors={form.formState.errors}
-          fields={fields}
-          getValues={form.getValues}
-          reset={form.reset}
-          register={form.register}
-          handleSubmit={form.handleSubmit}
-          onSubmit={onSubmit}
-          type="create"
+    <div>
+      <div className="flex sticky top-15 justify-between py-5 bg-white/30 dark:bg-black/10 backdrop-blur-md z-10">
+        <PaginationComponent
+          disableNext={data && data.length !== parseInt(limit)}
         />
-      </Form>
-    </>
+        <Button onClick={() => navigate(routes.blogs.create)}>
+          Create Blog
+        </Button>
+      </div>
+      <div className="flex flex-wrap py-5 gap-5 justify-center items-center">
+        {isLoading &&
+          Array.from({ length: 20 }).map((_, i) => (
+            <div
+              className="w-[350px] border rounded-lg p-4 space-y-4 shadow-sm"
+              key={i}
+            >
+              <div>
+                <Skeleton className="h-6 w-full mb-2" />
+                <div className="flex justify-end items-center gap-2">
+                  <Skeleton className="w-8 h-8 rounded-full" />
+                  <Skeleton className="h-4 w-1/3" />
+                </div>
+              </div>
+
+              <div className="h-[160px] w-full overflow-hidden flex items-center justify-center rounded-md">
+                <Skeleton className="h-full w-full rounded-md" />
+              </div>
+
+              <div className="flex justify-end gap-4 pt-2">
+                <Skeleton className="h-10 w-10 rounded-md" />
+                <Skeleton className="h-10 w-10 rounded-md" />
+                <Skeleton className="h-10 w-10 rounded-md" />
+              </div>
+            </div>
+          ))}
+        {data &&
+          data?.map((blog) => <BlogCard key={blog.id} blogData={blog} />)}
+      </div>
+      {}
+    </div>
   );
 };
 

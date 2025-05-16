@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateSecondApi from "../useCreateSecondApi";
-import type { ICategory } from "../../types/category";
 import { useSearchParams } from "react-router-dom";
+import type { IBlog } from "../../types/blog";
+import useCreateFirstApi from "../useCreateFirstApi";
 
-const getCategories = async ({
+const getBlogs = async ({
   api,
   page,
   limit,
@@ -12,26 +12,25 @@ const getCategories = async ({
   api: AxiosInstance;
   page: string;
   limit: string;
-}): Promise<ICategory[]> => {
-  const route = `/categories?page=${page}&limit=${limit}`;
+}): Promise<IBlog[]> => {
+  const route = `/blogs?page=${page}&limit=${limit}`;
 
   const result = await api.get(route);
   return result.data;
 };
 
-const useFetchPaginatedCategories = () => {
-  const api = useCreateSecondApi();
-
+const useFetchBlogs = () => {
+  const api = useCreateFirstApi();
   const [params] = useSearchParams();
 
   const page = params.get("page") ?? "1";
   const limit = params.get("limit") ?? "10";
 
   const result = useQuery({
-    queryKey: ["categories", page, limit],
-    queryFn: () => getCategories({ api, page, limit }),
+    queryKey: ["blogs", page, limit],
+    queryFn: () => getBlogs({ api, page, limit }),
   });
   return result;
 };
 
-export default useFetchPaginatedCategories;
+export default useFetchBlogs;
