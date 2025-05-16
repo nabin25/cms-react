@@ -30,9 +30,12 @@ const HomePage = () => {
             >
               <div>
                 <Skeleton className="h-6 w-full mb-2" />
-                <div className="flex justify-end items-center gap-2">
-                  <Skeleton className="w-8 h-8 rounded-full" />
-                  <Skeleton className="h-4 w-1/3" />
+                <div className="flex justify-between">
+                  <Skeleton className="h-4 w-1/5" />
+                  <div className="flex justify-end items-center gap-2 flex-grow">
+                    <Skeleton className="w-8 h-8 rounded-full" />
+                    <Skeleton className="h-4 w-1/3" />
+                  </div>
                 </div>
               </div>
 

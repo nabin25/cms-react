@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import routes from "../../routes/routes";
 import type { IBlog } from "../../types/blog";
 import PreviewBlog from "./PreviewBlog";
+import { calculateAverageReadTime } from "../../utils/average-read-time";
 
 const BlogCard = ({ blogData }: { blogData: IBlog }) => {
   const deleteMutation = useDeleteAuthor();
@@ -44,13 +45,16 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
     <Card className={cn("w-[350px]")}>
       <CardHeader>
         <CardTitle>{blogData.title}</CardTitle>
-        <div className="flex justify-end items-center gap-2 mt-1">
-          <img
-            className="w-8 aspect-square rounded-full"
-            src={authorData.avatar}
-            alt={authorData.name}
-          />
-          <p>{authorData?.name}</p>
+        <div className="flex justify-between items-center gap-2 mt-1">
+          <div>{calculateAverageReadTime(blogData.content ?? "")} min read</div>
+          <div className="flex justify-end gap-2 items-end">
+            <img
+              className="w-8 aspect-square rounded-full"
+              src={authorData.avatar}
+              alt={authorData.name}
+            />
+            <p>{authorData?.name}</p>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="h-[200px]">
