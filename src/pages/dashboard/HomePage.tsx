@@ -47,6 +47,13 @@ const HomePage = () => {
               <div className="h-[160px] w-full overflow-hidden flex items-center justify-center rounded-md">
                 <Skeleton className="h-full w-full rounded-md" />
               </div>
+              <div className="flex flex-wrap gap-2">
+                <Skeleton className="h-4 w-10 rounded-md" />
+                <Skeleton className="h-4 w-10 rounded-md" />
+                <Skeleton className="h-4 w-10 rounded-md" />
+              </div>
+
+              <Skeleton className="w-1/3 h-5 rounded-md" />
 
               <div className="flex justify-end gap-4 pt-2">
                 <Skeleton className="h-10 w-10 rounded-md" />

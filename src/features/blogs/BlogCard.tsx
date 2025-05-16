@@ -10,7 +10,6 @@ import {
 import { cn } from "../../lib/utils";
 import type { IAuthor } from "../../types/author";
 import { Button } from "../../components/ui/button";
-import useDeleteAuthor from "../../api/authors/useDeleteAuthor";
 import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
 import { useModalStore } from "../../stores/useModalStore";
 import { useNavigate } from "react-router-dom";
@@ -18,9 +17,11 @@ import routes from "../../routes/routes";
 import type { IBlog } from "../../types/blog";
 import PreviewBlog from "./PreviewBlog";
 import { calculateAverageReadTime } from "../../utils/average-read-time";
+import useDeleteBlog from "../../api/blogs/useDeleteBlog";
+import type { ICategory } from "../../types/category";
 
 const BlogCard = ({ blogData }: { blogData: IBlog }) => {
-  const deleteMutation = useDeleteAuthor();
+  const deleteMutation = useDeleteBlog();
 
   const { open, close } = useConfirmationModalStore();
 
@@ -40,6 +41,8 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
     });
   };
   const authorData: IAuthor = JSON.parse(blogData.author);
+  const tags: string[] = JSON.parse(blogData.tags);
+  const categoryData: ICategory = JSON.parse(blogData.category);
 
   return (
     <Card className={cn("w-[350px]")}>
@@ -66,6 +69,35 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
               src={blogData?.cover_image}
             />
           </div>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {(() => {
+              const trimmedTags = tags.map((tag) =>
+                tag.length > 15 ? tag.slice(0, 15) + ".." : tag
+              );
+
+              const visibleTags = trimmedTags.slice(0, 4);
+              const remainingCount = trimmedTags.length - 4;
+
+              return (
+                <div className="flex flex-wrap gap-2">
+                  {visibleTags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-gray-100 text-xs px-2 py-0.5 dark:bg-gray-800 rounded-md"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                  {remainingCount > 0 && (
+                    <span className="text-sm text-gray-500">
+                      +{remainingCount} more
+                    </span>
+                  )}
+                </div>
+              );
+            })()}
+          </div>
+          <p className="mt-2">Category: {categoryData.name}</p>
         </CardDescription>
       </CardContent>
       <CardFooter>
