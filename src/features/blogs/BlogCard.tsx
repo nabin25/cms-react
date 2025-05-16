@@ -20,6 +20,7 @@ import { calculateAverageReadTime } from "../../utils/average-read-time";
 import useDeleteBlog from "../../api/blogs/useDeleteBlog";
 import type { ICategory } from "../../types/category";
 import toast from "react-hot-toast";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 const BlogCard = ({ blogData }: { blogData: IBlog }) => {
   const deleteMutation = useDeleteBlog();
@@ -47,6 +48,7 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
 
   return (
     <Card className={cn("w-[350px]")}>
+      <LoadingOverlay isVisible={deleteMutation.isPending} />
       <CardHeader>
         <CardTitle>{blogData.title}</CardTitle>
         <div className="flex justify-between items-center gap-2 mt-1">

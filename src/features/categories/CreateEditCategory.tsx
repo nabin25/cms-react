@@ -12,6 +12,7 @@ import useCreateCategory from "../../api/categories/useCreateCategory";
 import useEditCategory from "../../api/categories/useEditCategory";
 import useCategoryFormData from "../../hooks/useCategoryFormData";
 import toast from "react-hot-toast";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 const CreateEditCategory = ({ categoryData }: { categoryData?: ICategory }) => {
   const { close } = useModalStore();
@@ -59,6 +60,9 @@ const CreateEditCategory = ({ categoryData }: { categoryData?: ICategory }) => {
   };
   return (
     <>
+      <LoadingOverlay
+        isVisible={createMutation.isPending || editMutation?.isPending}
+      />
       <Form {...form}>
         <FormBuilder
           control={form.control}

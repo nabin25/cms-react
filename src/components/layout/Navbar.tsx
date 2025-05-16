@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../providers/AuthProvider";
 import ThemeToggler from "../theme/ThemeToggler";
 import { Button } from "../ui/button";
@@ -6,13 +7,17 @@ import Sidebar from "./Sidebar";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   return (
     <>
       <nav className="bg-white/30 dark:bg-black/10 backdrop-blur-sm text-white p-4 fixed w-full top-0 left-0 z-10 px-4 md:px-10">
         <div className="w-full flex justify-between items-centers">
           <div className="flex items-center justify-start gap-2">
             <Sidebar />
-            <div className="text-xl font-bold text-black dark:text-white">
+            <div
+              className="text-xl font-bold text-black dark:text-white cursor-pointer"
+              onClick={() => navigate("/")}
+            >
               SpellCMS
             </div>
           </div>

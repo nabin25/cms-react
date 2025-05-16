@@ -21,7 +21,7 @@ const Sidebar = () => {
     { label: "Blogs", route: routes.blogs.home, icon: <Newspaper /> },
     { label: "Create Blog", route: routes.blogs.create, icon: <FilePlus /> },
     { label: "Authors", route: routes.authors, icon: <User /> },
-    { label: "Categories", route: routes.authors, icon: <Layers /> },
+    { label: "Categories", route: routes.categories, icon: <Layers /> },
   ];
   const navigate = useNavigate();
   useEffect(() => {
@@ -44,7 +44,7 @@ const Sidebar = () => {
                   onClick={() => navigate(singleRoute?.route)}
                   key={singleRoute.route}
                   className={cn(
-                    "flex w-full h-14 transition-all duration-200 hover:bg-gray-500/15 px-5 items-center rounded-md justify-between bg-gray-500/10"
+                    "flex w-full h-14 transition-all duration-200 hover:bg-gray-500/15 px-5 items-center rounded-md justify-between bg-gray-500/10 cursor-pointer"
                   )}
                 >
                   <p>{singleRoute.label}</p>

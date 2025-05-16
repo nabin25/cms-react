@@ -7,8 +7,9 @@ const useBlogFormData = () => {
   const [tagOption, setTagOption] = useState<
     { label: string; value: string }[]
   >([]);
-  const { data: authorData } = useFetchAuthors();
-  const { data: categoryData } = useFetchCategories();
+  const { data: authorData, isLoading: isAuthorLoading } = useFetchAuthors();
+  const { data: categoryData, isLoading: isCategoryLoading } =
+    useFetchCategories();
   const fields: IFormItem[] = [
     {
       name: "title",
@@ -70,7 +71,15 @@ const useBlogFormData = () => {
       colSize: 6,
     },
   ];
-  return { fields, authorData, categoryData, setTagOption };
+
+  const isLoading = isAuthorLoading || isCategoryLoading;
+  return {
+    fields,
+    authorData,
+    categoryData,
+    setTagOption,
+    isLoading,
+  };
 };
 
 export default useBlogFormData;

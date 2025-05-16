@@ -13,17 +13,22 @@ import toast from "react-hot-toast";
 import routes from "../../routes/routes";
 import useDraftSaveStore from "../../stores/useDraftSaveStore";
 import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 const CreateEditBlogPage = () => {
   const { formState: draft, setFormState, clear } = useDraftSaveStore();
   const [shouldAutoSave, setShouldAutoSave] = useState(false);
   const { id } = useParams();
-  const { data: blogData } = useFetchBlogById({ id: id });
+  const { data: blogData, isLoading } = useFetchBlogById({ id: id });
   const tags = blogData?.tags;
   const form = useForm<BlogData>({
     resolver: zodResolver(blogSchema),
   });
-  const { fields, setTagOption } = useBlogFormData();
+  const {
+    fields,
+    setTagOption,
+    isLoading: isOptionsLoading,
+  } = useBlogFormData();
   const { open, close } = useConfirmationModalStore();
   const handleDraftRecover = () => {
     //@ts-ignore
@@ -96,6 +101,7 @@ const CreateEditBlogPage = () => {
 
   const editMutation = useEditBlog();
   const isCreateBlog = !id;
+
   const onSubmit = (data: BlogData) => {
     if (isCreateBlog) {
       createMutation.mutate(data, {
@@ -124,6 +130,14 @@ const CreateEditBlogPage = () => {
   };
   return (
     <>
+      <LoadingOverlay
+        isVisible={
+          createMutation.isPending ||
+          editMutation?.isPending ||
+          isLoading ||
+          isOptionsLoading
+        }
+      />
       <Form {...form}>
         <FormBuilder
           control={form.control}

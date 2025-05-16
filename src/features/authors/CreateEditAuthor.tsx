@@ -9,6 +9,7 @@ import { useModalStore } from "../../stores/useModalStore";
 import useEditAuthor from "../../api/authors/useEditAuthor";
 import useAuthorFormData from "../../hooks/useAuthorFormData";
 import toast from "react-hot-toast";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 const CreateEditAuthor = ({ authorData }: { authorData?: IAuthor }) => {
   const { close } = useModalStore();
@@ -57,6 +58,9 @@ const CreateEditAuthor = ({ authorData }: { authorData?: IAuthor }) => {
   };
   return (
     <>
+      <LoadingOverlay
+        isVisible={createMutation.isPending || editMutation?.isPending}
+      />
       <Form {...form}>
         <FormBuilder
           control={form.control}

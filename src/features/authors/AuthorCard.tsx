@@ -15,6 +15,7 @@ import { useConfirmationModalStore } from "../../stores/useConfirmationModalStor
 import CreateEditAuthor from "./CreateEditAuthor";
 import { useModalStore } from "../../stores/useModalStore";
 import toast from "react-hot-toast";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
   const deleteMutation = useDeleteAuthor();
@@ -37,6 +38,7 @@ const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
   };
   return (
     <Card className={cn("w-[350px]")}>
+      <LoadingOverlay isVisible={deleteMutation.isPending} />
       <CardHeader>
         <div className="flex justify-between place-items-center">
           <img
