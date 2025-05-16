@@ -81,6 +81,7 @@ const CreatableSelect = ({ label, ...props }: ColourOption) => {
       {label}
       <ReactSelect
         {...props}
+        placeholder={"Type and enter to create new"}
         styles={customStyles}
         menuPortalTarget={document.body}
         menuPosition="fixed"

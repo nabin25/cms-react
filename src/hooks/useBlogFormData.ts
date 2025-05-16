@@ -70,7 +70,7 @@ const useBlogFormData = () => {
       colSize: 6,
     },
   ];
-  return { fields, authorData, categoryData };
+  return { fields, authorData, categoryData, setTagOption };
 };
 
 export default useBlogFormData;

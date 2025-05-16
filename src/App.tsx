@@ -24,6 +24,11 @@ function App() {
                     path="/blogs/create"
                     element={<CreateEditBlogPage />}
                   />
+
+                  <Route
+                    path="/blogs/edit/:id"
+                    element={<CreateEditBlogPage />}
+                  />
                   <Route path="/authors" element={<AuthorsPage />} />
                   <Route path="/categories" element={<CategoryPage />} />
                 </Route>
