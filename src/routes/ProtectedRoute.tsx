@@ -9,7 +9,7 @@ const ProtectedRoute = () => {
   return token && user ? (
     <>
       <Navbar />
-      <div className="pt-18 px-4 md:px-10">
+      <div className="pt-18 px-4 md:px-10 pb-5">
         <Outlet />
         <ConfirmationModal />
         <GlobalModal />

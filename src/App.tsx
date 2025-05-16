@@ -6,6 +6,7 @@ import AuthProvider from "./providers/AuthProvider";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SignInPage from "./pages/auth/SignInPage";
 import HomePage from "./pages/dashboard/HomePage";
+import AuthorsPage from "./pages/dashboard/AuthorsPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Routes>
                 <Route element={<ProtectedRoute />}>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/authors" element={<AuthorsPage />} />
                 </Route>
                 <Route path="auth/sign-in" element={<SignInPage />}></Route>
               </Routes>
