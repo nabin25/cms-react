@@ -41,7 +41,7 @@ const PaginationComponent = ({ disableNext }: { disableNext?: boolean }) => {
   };
 
   return (
-    <div className="flex w-fit justify-between gap-3">
+    <div className="flex w-fit justify-between gap-1 lg:gap-3 items-center">
       <Button
         variant="ghost"
         disabled={page === "1" || isPreviousTemporarilyDisabled}
@@ -49,9 +49,8 @@ const PaginationComponent = ({ disableNext }: { disableNext?: boolean }) => {
       >
         <ArrowBigLeftDash />
       </Button>
-      <span className="dark:bg-white bg-black w-8 aspect-square flex items-center justify-center rounded-md text-lg dark:text-black text-white">
-        {page}
-      </span>
+      <strong>{page}</strong>
+
       <Button
         variant="ghost"
         disabled={disableNext || isNextTemporarilyDisabled}

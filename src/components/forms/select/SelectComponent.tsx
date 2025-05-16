@@ -85,13 +85,15 @@ const SelectComponent = ({
         isDisabled={disabled}
         {...props}
         //@ts-ignore
-        menuPortalTarget={typeof window !== "undefined" && document.body}
+        menuPortalTarget={document.body}
         menuPosition="fixed"
         isClearable={isClearable}
         styles={customStyles}
         placeholder={placeholder}
       />
-      <p className="text-red-600">{props.error}</p>
+      {props.error && props.error !== "" && (
+        <p className="text-red-600">{props.error}</p>
+      )}
     </div>
   );
 };

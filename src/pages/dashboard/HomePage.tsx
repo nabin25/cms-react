@@ -5,6 +5,8 @@ import BlogCard from "../../features/blogs/BlogCard";
 import { Button } from "../../components/ui/button";
 import routes from "../../routes/routes";
 import { Skeleton } from "../../components/ui/skeleton";
+import BlogFilter from "../../features/blogs/BlogFilter";
+import { Plus } from "lucide-react";
 
 const HomePage = () => {
   const { data, isLoading } = useFetchBlogs();
@@ -15,11 +17,14 @@ const HomePage = () => {
     <div>
       <div className="flex sticky top-15 justify-between py-5 bg-white/30 dark:bg-black/10 backdrop-blur-md z-10">
         <PaginationComponent
-          disableNext={data && data.length !== parseInt(limit)}
+          disableNext={!data || data?.length !== parseInt(limit)}
         />
-        <Button onClick={() => navigate(routes.blogs.create)}>
-          Create Blog
-        </Button>
+        <div className="flex gap-2 shrink">
+          <Button onClick={() => navigate(routes.blogs.create)}>
+            <Plus />
+          </Button>
+          <BlogFilter />
+        </div>
       </div>
       <div className="flex flex-wrap py-5 gap-5 justify-center items-center">
         {isLoading &&

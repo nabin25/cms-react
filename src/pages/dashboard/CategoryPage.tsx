@@ -17,7 +17,7 @@ const CategoryPage = () => {
     <div>
       <div className="flex sticky top-15 justify-between py-5 bg-white/30 dark:bg-black/10 backdrop-blur-md  z-10">
         <PaginationComponent
-          disableNext={data && data.length !== parseInt(limit)}
+          disableNext={!data || data.length !== parseInt(limit)}
         />
         <Button
           onClick={() =>

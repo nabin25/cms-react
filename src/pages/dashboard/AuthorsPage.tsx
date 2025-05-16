@@ -13,10 +13,10 @@ const AuthorsPage = () => {
   const { open } = useModalStore();
   const limit = params.get("limit") ?? "10";
   return (
-    <div>
+    <>
       <div className="flex py-5 sticky top-15 justify-between bg-white/30 dark:bg-black/10 backdrop-blur-md z-10">
         <PaginationComponent
-          disableNext={data && data.length !== parseInt(limit)}
+          disableNext={!data || data.length !== parseInt(limit)}
         />
         <Button
           onClick={() =>
@@ -58,7 +58,7 @@ const AuthorsPage = () => {
             <AuthorCard key={singleAuthor.id} authorData={singleAuthor} />
           ))}
       </div>
-    </div>
+    </>
   );
 };
 
