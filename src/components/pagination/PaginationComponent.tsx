@@ -17,9 +17,7 @@ const PaginationComponent = ({ disableNext }: { disableNext?: boolean }) => {
     setIsNextTemporarilyDisabled(true);
     const newParams = new URLSearchParams(params);
     newParams.set("page", (parseInt(page) + 1).toString());
-
-    setParams(newParams);
-    setParams(newParams);
+    setParams(newParams, { replace: true });
     setTimeout(() => {
       setIsNextTemporarilyDisabled(false);
     }, 1000);
@@ -30,7 +28,7 @@ const PaginationComponent = ({ disableNext }: { disableNext?: boolean }) => {
     const newParams = new URLSearchParams(params);
     newParams.set("page", (parseInt(page) - 1).toString());
 
-    setParams(newParams);
+    setParams(newParams, { replace: true });
     setTimeout(() => {
       setIsPreviousTemporarilyDisabled(false);
     }, 1000);
@@ -39,7 +37,7 @@ const PaginationComponent = ({ disableNext }: { disableNext?: boolean }) => {
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newParams = new URLSearchParams(params);
     newParams.set("limit", e.target.value);
-    setParams(newParams);
+    setParams(newParams, { replace: true });
   };
 
   return (
