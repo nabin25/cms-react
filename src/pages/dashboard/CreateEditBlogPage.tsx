@@ -6,13 +6,17 @@ import { blogSchema, type BlogData } from "../../schemas/blog.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCreateBlog from "../../api/blogs/useCreateBlog";
 import useFetchBlogById from "../../api/blogs/useFetchBlogById";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useEditBlog from "../../api/blogs/useEditBlog";
 import toast from "react-hot-toast";
 import routes from "../../routes/routes";
+import useDraftSaveStore from "../../stores/useDraftSaveStore";
+import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
 
 const CreateEditBlogPage = () => {
+  const { formState: draft, setFormState, clear } = useDraftSaveStore();
+  const [shouldAutoSave, setShouldAutoSave] = useState(false);
   const { id } = useParams();
   const { data: blogData } = useFetchBlogById({ id: id });
   const tags = blogData?.tags;
@@ -20,6 +24,36 @@ const CreateEditBlogPage = () => {
     resolver: zodResolver(blogSchema),
   });
   const { fields, setTagOption } = useBlogFormData();
+  const { open, close } = useConfirmationModalStore();
+  const handleDraftRecover = () => {
+    //@ts-ignore
+    form.reset({ ...draft });
+    close();
+    setShouldAutoSave(true);
+  };
+
+  const handleDraftClear = () => {
+    clear();
+    close();
+    setShouldAutoSave(true);
+  };
+
+  useEffect(() => {
+    if (!id) {
+      const isDraftEmpty = Object.entries(draft).every(([key, value]) => {
+        if (key === "content") return !value || value.length < 10;
+        if (typeof value === "string") return value.trim() === "";
+        if (Array.isArray(value)) return value.length === 0;
+        return !value;
+      });
+
+      if (!isDraftEmpty) {
+        open(handleDraftRecover, "draft", handleDraftClear);
+      } else {
+        setShouldAutoSave(true);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (blogData) {
@@ -45,6 +79,17 @@ const CreateEditBlogPage = () => {
       });
     }
   }, [blogData]);
+
+  useEffect(() => {
+    if (!shouldAutoSave) return;
+
+    const interval = setInterval(() => {
+      const currentValues = form.getValues();
+      setFormState(currentValues);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [shouldAutoSave]);
 
   const createMutation = useCreateBlog();
 
