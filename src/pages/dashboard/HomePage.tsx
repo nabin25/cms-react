@@ -18,7 +18,6 @@ const HomePage = () => {
 
   const fields: IFormItem[] = [
     {
-      ariaLabel: "Field one",
       name: "field_one",
       label: "Field One",
       placeholder: "Field one ...",
@@ -26,7 +25,6 @@ const HomePage = () => {
       colSize: 4,
     },
     {
-      ariaLabel: "Field two",
       name: "field_two",
       label: "Field two",
       placeholder: "Field two ...",
@@ -34,7 +32,6 @@ const HomePage = () => {
       colSize: 8,
     },
     {
-      ariaLabel: "Field three",
       name: "field_three",
       label: "Field three",
       placeholder: "Field three ...",
@@ -42,7 +39,6 @@ const HomePage = () => {
       colSize: 12,
     },
     {
-      ariaLabel: "Quill Field",
       name: "quill_ield",
       label: "Quill field",
       placeholder: "Enter your content ...",
@@ -50,7 +46,6 @@ const HomePage = () => {
       colSize: 12,
     },
     {
-      ariaLabel: "Select Field",
       name: "select_field",
       label: "Select Field",
       placeholder: "Select options ...",
@@ -62,7 +57,6 @@ const HomePage = () => {
       ],
     },
     {
-      ariaLabel: "Quill Field",
       name: "quill_ield",
       label: "Quill field",
       placeholder: "Enter your content ...",
@@ -70,7 +64,6 @@ const HomePage = () => {
       colSize: 12,
     },
     {
-      ariaLabel: "Select Field",
       name: "creatable_select",
       label: "Select Field",
       placeholder: "Select options ...",

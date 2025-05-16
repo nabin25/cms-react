@@ -50,7 +50,11 @@ const FormComponent = ({
                 <img
                   alt="image"
                   className="object-contain"
-                  src={field.value?.toString() ?? ""}
+                  src={
+                    field.value?.toString() && field.value?.toString() !== ""
+                      ? field.value?.toString()
+                      : undefined
+                  }
                 />
                 {field?.value && (
                   <Trash2
@@ -61,6 +65,7 @@ const FormComponent = ({
               </div>
               <FormControl>
                 <Input
+                  aria-label={formItem.label}
                   placeholder={formItem?.placeholder ?? "Enter text..."}
                   {...field}
                   value={field.value ?? ""}
@@ -79,6 +84,7 @@ const FormComponent = ({
             <QuillEditor
               //@ts-ignore
               value={value}
+              aria-label={formItem.label}
               onChange={onChange}
               label={
                 <p className="flex font-medium text-sm dark:text-white items-center gap-2">
@@ -104,6 +110,7 @@ const FormComponent = ({
               </FormLabel>
               <FormControl>
                 <Textarea
+                  aria-label={formItem.label}
                   placeholder={formItem?.placeholder ?? "Enter text..."}
                   {...field}
                   value={field.value ?? ""}
@@ -120,6 +127,7 @@ const FormComponent = ({
           control={control}
           render={({ field: { value = null, onChange } }) => (
             <SelectComponent
+              aria-label={formItem.label}
               className="min-w-60"
               options={formItem.options || [{ label: "", value: "" }]}
               value={formItem?.options?.find((c) => c.value === value) || ""}
@@ -145,6 +153,7 @@ const FormComponent = ({
           control={control}
           render={({ field: { value = null, onChange } }) => (
             <CreatableSelect
+              aria-label={formItem.label}
               className="flex flex-1 flex-col !h-full min-w-60"
               options={formItem.options || [{ label: "", value: "" }]}
               label={
@@ -187,6 +196,7 @@ const FormComponent = ({
               </FormLabel>
               <FormControl>
                 <Input
+                  aria-label={formItem.label}
                   placeholder={formItem?.placeholder ?? "Enter text..."}
                   {...field}
                   value={field.value ?? ""}

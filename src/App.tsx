@@ -8,6 +8,7 @@ import SignInPage from "./pages/auth/SignInPage";
 import HomePage from "./pages/dashboard/HomePage";
 import AuthorsPage from "./pages/dashboard/AuthorsPage";
 import CategoryPage from "./pages/dashboard/CategoryPage";
+import CreateEditBlogPage from "./pages/dashboard/CreateEditBlogPage";
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
               <Routes>
                 <Route element={<ProtectedRoute />}>
                   <Route path="/" element={<HomePage />} />
+                  <Route
+                    path="/blogs/create"
+                    element={<CreateEditBlogPage />}
+                  />
                   <Route path="/authors" element={<AuthorsPage />} />
                   <Route path="/categories" element={<CategoryPage />} />
                 </Route>

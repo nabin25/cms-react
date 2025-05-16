@@ -9,7 +9,6 @@ export type IFormItem = {
   type: "text" | "quill" | "select" | "creatable-select" | "image" | "textarea";
   label: string;
   placeholder?: string;
-  ariaLabel: string;
   colSize?: 2 | 3 | 4 | 6 | 8 | 12;
   optional?: boolean;
   options?: IOption[];
