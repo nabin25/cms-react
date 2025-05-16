@@ -12,6 +12,7 @@ import CreateEditCategory from "./CreateEditCategory";
 import { useModalStore } from "../../stores/useModalStore";
 import type { ICategory } from "../../types/category";
 import useDeleteCategory from "../../api/categories/useDeleteCategory";
+import toast from "react-hot-toast";
 
 const CategoryCard = ({ categoryData }: { categoryData: ICategory }) => {
   const deleteMutation = useDeleteCategory();
@@ -23,11 +24,11 @@ const CategoryCard = ({ categoryData }: { categoryData: ICategory }) => {
   const handleDelete = () => {
     deleteMutation.mutate(categoryData.id, {
       onSuccess: () => {
-        console.log("Category Deleted Successfully");
+        toast.success("Category Deleted Successfully");
         close();
       },
       onError: () => {
-        console.log("Error deleting category");
+        toast.error("Error deleting category");
         close();
       },
     });

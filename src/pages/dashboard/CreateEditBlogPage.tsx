@@ -7,8 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useCreateBlog from "../../api/blogs/useCreateBlog";
 import useFetchBlogById from "../../api/blogs/useFetchBlogById";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useEditBlog from "../../api/blogs/useEditBlog";
+import toast from "react-hot-toast";
+import routes from "../../routes/routes";
 
 const CreateEditBlogPage = () => {
   const { id } = useParams();
@@ -46,16 +48,19 @@ const CreateEditBlogPage = () => {
 
   const createMutation = useCreateBlog();
 
+  const navigate = useNavigate();
+
   const editMutation = useEditBlog();
   const isCreateBlog = !id;
   const onSubmit = (data: BlogData) => {
     if (isCreateBlog) {
       createMutation.mutate(data, {
         onSuccess: () => {
-          console.log("Blog Created Successfully");
+          toast.success("Blog Created Successfully");
+          navigate(routes.blogs.home);
         },
         onError: () => {
-          console.log("Error Creating Blog");
+          toast.error("Error Creating Blog");
         },
       });
     } else {
@@ -63,10 +68,11 @@ const CreateEditBlogPage = () => {
         { formData: data, id: id },
         {
           onSuccess: () => {
-            console.log("Blog Edited Successfully");
+            toast.success("Blog Edited Successfully");
+            navigate(routes.blogs.home);
           },
           onError: () => {
-            console.log("Error Editing Blog");
+            toast.error("Error Editing Blog");
           },
         }
       );

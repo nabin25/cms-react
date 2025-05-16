@@ -14,6 +14,7 @@ import useDeleteAuthor from "../../api/authors/useDeleteAuthor";
 import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
 import CreateEditAuthor from "./CreateEditAuthor";
 import { useModalStore } from "../../stores/useModalStore";
+import toast from "react-hot-toast";
 
 const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
   const deleteMutation = useDeleteAuthor();
@@ -25,11 +26,11 @@ const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
   const handleDelete = () => {
     deleteMutation.mutate(authorData.id, {
       onSuccess: () => {
-        console.log("Author Deleted Successfully");
+        toast.success("Author Deleted Successfully");
         close();
       },
       onError: () => {
-        console.log("Error deleting author");
+        toast.error("Error deleting author");
         close();
       },
     });

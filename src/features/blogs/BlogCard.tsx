@@ -19,6 +19,7 @@ import PreviewBlog from "./PreviewBlog";
 import { calculateAverageReadTime } from "../../utils/average-read-time";
 import useDeleteBlog from "../../api/blogs/useDeleteBlog";
 import type { ICategory } from "../../types/category";
+import toast from "react-hot-toast";
 
 const BlogCard = ({ blogData }: { blogData: IBlog }) => {
   const deleteMutation = useDeleteBlog();
@@ -31,11 +32,11 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
   const handleDelete = () => {
     deleteMutation.mutate(blogData.id, {
       onSuccess: () => {
-        console.log("Blog Deleted Successfully");
+        toast.success("Blog Deleted Successfully");
         close();
       },
       onError: () => {
-        console.log("Error deleting blog");
+        toast.error("Error deleting blog");
         close();
       },
     });

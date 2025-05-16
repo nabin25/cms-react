@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "../../components/ui/form";
 import { Navigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 type ILoginData = z.infer<typeof loginSchema>;
 
@@ -41,10 +42,14 @@ const SignInPage = () => {
             },
             data[0]?.token
           );
+          setInterval(() => toast.success("Logged In Successfully"), 100);
         } else {
+          toast.error("Invalid Login Credentials");
         }
       },
-      onError: () => {},
+      onError: () => {
+        toast.error("Invalid Login Credentials");
+      },
     });
   };
   return (

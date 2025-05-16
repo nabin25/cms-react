@@ -8,6 +8,7 @@ import useCreateAuthor from "../../api/authors/useCreateAuthor";
 import { useModalStore } from "../../stores/useModalStore";
 import useEditAuthor from "../../api/authors/useEditAuthor";
 import useAuthorFormData from "../../hooks/useAuthorFormData";
+import toast from "react-hot-toast";
 
 const CreateEditAuthor = ({ authorData }: { authorData?: IAuthor }) => {
   const { close } = useModalStore();
@@ -30,12 +31,12 @@ const CreateEditAuthor = ({ authorData }: { authorData?: IAuthor }) => {
     if (isCreateAuthor) {
       createMutation.mutate(data, {
         onSuccess: () => {
-          console.log("Author created Successfully");
+          toast.success("Author created Successfully");
           close();
           form.reset();
         },
         onError: () => {
-          console.log("Error creating author");
+          toast.error("Error creating author");
         },
       });
     } else {
@@ -43,12 +44,12 @@ const CreateEditAuthor = ({ authorData }: { authorData?: IAuthor }) => {
         { formData: data, id: authorData.id },
         {
           onSuccess: () => {
-            console.log("Author edited Successfully");
+            toast.success("Author edited Successfully");
             close();
             form.reset();
           },
           onError: () => {
-            console.log("Error editing author");
+            toast.error("Error editing author");
           },
         }
       );

@@ -9,6 +9,7 @@ import HomePage from "./pages/dashboard/HomePage";
 import AuthorsPage from "./pages/dashboard/AuthorsPage";
 import CategoryPage from "./pages/dashboard/CategoryPage";
 import CreateEditBlogPage from "./pages/dashboard/CreateEditBlogPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <QueryProvider>
           <ThemeProvider>
             <AuthProvider>
+              <Toaster />
               <Routes>
                 <Route element={<ProtectedRoute />}>
                   <Route path="/" element={<HomePage />} />

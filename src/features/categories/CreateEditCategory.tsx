@@ -11,6 +11,7 @@ import {
 import useCreateCategory from "../../api/categories/useCreateCategory";
 import useEditCategory from "../../api/categories/useEditCategory";
 import useCategoryFormData from "../../hooks/useCategoryFormData";
+import toast from "react-hot-toast";
 
 const CreateEditCategory = ({ categoryData }: { categoryData?: ICategory }) => {
   const { close } = useModalStore();
@@ -32,12 +33,12 @@ const CreateEditCategory = ({ categoryData }: { categoryData?: ICategory }) => {
     if (isCreateCategory) {
       createMutation.mutate(data, {
         onSuccess: () => {
-          console.log("Category created Successfully");
+          toast.success("Category created Successfully");
           close();
           form.reset();
         },
         onError: () => {
-          console.log("Error creating category");
+          toast.error("Error creating category");
         },
       });
     } else {
@@ -45,12 +46,12 @@ const CreateEditCategory = ({ categoryData }: { categoryData?: ICategory }) => {
         { formData: data, id: categoryData.id },
         {
           onSuccess: () => {
-            console.log("Category edited Successfully");
+            toast.success("Category edited Successfully");
             close();
             form.reset();
           },
           onError: () => {
-            console.log("Error editing category");
+            toast.error("Error editing category");
           },
         }
       );
