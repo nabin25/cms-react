@@ -20,7 +20,7 @@ interface DraftState {
 
 const useDraftSaveStore = create<DraftState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       formState: {
         title: "",
         content: "",
