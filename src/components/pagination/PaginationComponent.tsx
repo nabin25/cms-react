@@ -9,12 +9,17 @@ const PaginationComponent = ({ disableNext }: { disableNext?: boolean }) => {
     useState(false);
   const [isNextTemporarilyDisabled, setIsNextTemporarilyDisabled] =
     useState(false);
+
   const page = params.get("page") ?? "1";
   const limit = params.get("limit") ?? "10";
+
   const handleNextClick = () => {
     setIsNextTemporarilyDisabled(true);
+    const newParams = new URLSearchParams(params);
+    newParams.set("page", (parseInt(page) + 1).toString());
 
-    setParams({ page: (parseInt(page) + 1).toString() });
+    setParams(newParams);
+    setParams(newParams);
     setTimeout(() => {
       setIsNextTemporarilyDisabled(false);
     }, 1000);
@@ -22,15 +27,19 @@ const PaginationComponent = ({ disableNext }: { disableNext?: boolean }) => {
 
   const handlePreviousClick = () => {
     setIsPreviousTemporarilyDisabled(true);
+    const newParams = new URLSearchParams(params);
+    newParams.set("page", (parseInt(page) - 1).toString());
 
-    setParams({ page: (parseInt(page) - 1).toString() });
+    setParams(newParams);
     setTimeout(() => {
       setIsPreviousTemporarilyDisabled(false);
     }, 1000);
   };
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setParams({ limit: e.target.value });
+    const newParams = new URLSearchParams(params);
+    newParams.set("limit", e.target.value);
+    setParams(newParams);
   };
 
   return (

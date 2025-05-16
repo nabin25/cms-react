@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import useFetchPaginatedAuthors from "../../api/authors/useFetchPaginatedAuthors";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
 import { Button } from "../../components/ui/button";
@@ -8,11 +9,15 @@ import { useModalStore } from "../../stores/useModalStore";
 
 const AuthorsPage = () => {
   const { data, isLoading } = useFetchPaginatedAuthors();
+  const [params] = useSearchParams();
   const { open } = useModalStore();
+  const limit = params.get("limit") ?? "10";
   return (
     <div>
       <div className="flex sticky top-15 justify-between py-5 bg-white/30 dark:bg-black/10 backdrop-blur-md">
-        <PaginationComponent />
+        <PaginationComponent
+          disableNext={data && data.length !== parseInt(limit)}
+        />
         <Button
           onClick={() =>
             open({ view: <CreateEditAuthor />, title: "Create New Author" })
