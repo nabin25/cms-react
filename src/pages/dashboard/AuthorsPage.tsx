@@ -7,12 +7,18 @@ import AuthorCard from "../../features/authors/AuthorCard";
 import CreateEditAuthor from "../../features/authors/CreateEditAuthor";
 import { useModalStore } from "../../stores/useModalStore";
 import NoDataFound from "../../components/NoDataFound";
+import { useEffect } from "react";
 
 const AuthorsPage = () => {
   const { data, isLoading, isError } = useFetchPaginatedAuthors();
   const [params] = useSearchParams();
   const { open } = useModalStore();
   const limit = params.get("limit") ?? "10";
+
+  useEffect(() => {
+    document.title = "Author Page";
+  }, []);
+
   return (
     <>
       <div className="flex py-5 sticky top-15 justify-between bg-white/30 dark:bg-black/10 backdrop-blur-md z-10">

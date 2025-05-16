@@ -19,17 +19,24 @@ const CreateEditBlogPage = () => {
   const { formState: draft, setFormState, clear } = useDraftSaveStore();
   const [shouldAutoSave, setShouldAutoSave] = useState(false);
   const { id } = useParams();
+
+  useEffect(() => {
+    document.title = id ? "Edit Blog" : "Create Blog";
+  }, []);
+
   const { data: blogData, isLoading } = useFetchBlogById({ id: id });
   const tags = blogData?.tags;
   const form = useForm<BlogData>({
     resolver: zodResolver(blogSchema),
   });
+
   const {
     fields,
     setTagOption,
     isLoading: isOptionsLoading,
   } = useBlogFormData();
   const { open, close } = useConfirmationModalStore();
+
   const handleDraftRecover = () => {
     //@ts-ignore
     form.reset({ ...draft });

@@ -8,12 +8,16 @@ import { Skeleton } from "../../components/ui/skeleton";
 import BlogFilter from "../../features/blogs/BlogFilter";
 import { Plus } from "lucide-react";
 import NoDataFound from "../../components/NoDataFound";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const { data, isLoading, isError } = useFetchBlogs();
   const [params] = useSearchParams();
   const limit = params.get("limit") ?? "10";
   const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "SpellCMS Home";
+  }, []);
   return (
     <div>
       <div className="flex sticky top-15 justify-between py-5 bg-white/30 dark:bg-black/10 backdrop-blur-md z-10">

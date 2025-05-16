@@ -7,6 +7,7 @@ import CreateEditCategory from "../../features/categories/CreateEditCategory";
 import { useModalStore } from "../../stores/useModalStore";
 import useFetchPaginatedCategories from "../../api/categories/useFetchPaginatedCategories";
 import NoDataFound from "../../components/NoDataFound";
+import { useEffect } from "react";
 
 const CategoryPage = () => {
   const { data, isLoading, isError } = useFetchPaginatedCategories();
@@ -14,6 +15,11 @@ const CategoryPage = () => {
 
   const [params] = useSearchParams();
   const limit = params.get("limit") ?? "10";
+
+  useEffect(() => {
+    document.title = "Category Page";
+  }, []);
+
   return (
     <div>
       <div className="flex sticky top-15 justify-between py-5 bg-white/30 dark:bg-black/10 backdrop-blur-md  z-10">
