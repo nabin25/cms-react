@@ -1,17 +1,37 @@
-import { Pencil } from "lucide-react";
+import { Pencil, SquarePen, Trash2 } from "lucide-react";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
 import { cn } from "../../lib/utils";
 import type { IAuthor } from "../../types/author";
+import { Button } from "../../components/ui/button";
+import useDeleteAuthor from "../../api/authors/useDeleteAuthor";
+import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
 
 const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
+  const deleteMutation = useDeleteAuthor();
+
+  const { open, close } = useConfirmationModalStore();
+
+  const handleDelete = () => {
+    deleteMutation.mutate(authorData.id, {
+      onSuccess: () => {
+        console.log("Author Deleted Successfully");
+        close();
+      },
+      onError: () => {
+        console.log("Error deleting author");
+        close();
+      },
+    });
+  };
   return (
-    <Card className={cn("w-[350px] h-[300px]")}>
+    <Card className={cn("w-[350px]")}>
       <CardHeader>
         <div className="flex justify-between place-items-center">
           <img
@@ -22,7 +42,7 @@ const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
           <CardTitle>{authorData?.name}</CardTitle>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-[120px]">
         <CardDescription>
           <p className="mb-2">
             Member since{" "}
@@ -32,9 +52,22 @@ const AuthorCard = ({ authorData }: { authorData: IAuthor }) => {
           <p>
             <Pencil className="inline w-4" /> <strong>Bio</strong>
           </p>
-          <p className="line-clamp-4">{authorData?.bio}</p>
+          <p className="line-clamp-3">{authorData?.bio}</p>
         </CardDescription>
       </CardContent>
+      <CardFooter>
+        <div className="flex w-full justify-end gap-4">
+          <Button variant="ghost">
+            <SquarePen />
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={() => open(handleDelete, "delete")}
+          >
+            <Trash2 />
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 };
