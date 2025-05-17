@@ -31,49 +31,52 @@ const HomePage = () => {
           <BlogFilter />
         </div>
       </div>
-      {!isLoading && (isError || !data || data.length === 0) && <NoDataFound />}
-      <div className="flex flex-wrap py-5 gap-5 justify-center items-center">
-        {isLoading &&
-          Array.from({ length: 20 }).map((_, i) => (
-            <div
-              className="w-[350px] border rounded-lg p-4 space-y-4 shadow-sm"
-              key={i}
-            >
-              <div>
-                <Skeleton className="h-6 w-full mb-2" />
-                <div className="flex justify-between">
-                  <Skeleton className="h-4 w-1/5" />
-                  <div className="flex justify-end items-center gap-2 flex-grow">
-                    <Skeleton className="w-8 h-8 rounded-full" />
-                    <Skeleton className="h-4 w-1/4" />
+      {!isLoading && (isError || !data || data.length === 0) ? (
+        <NoDataFound />
+      ) : (
+        <div className="flex flex-wrap py-5 gap-5 justify-center items-center">
+          {isLoading &&
+            Array.from({ length: 20 }).map((_, i) => (
+              <div
+                className="w-[350px] border rounded-lg p-4 space-y-4 shadow-sm"
+                key={i}
+              >
+                <div>
+                  <Skeleton className="h-6 w-full mb-2" />
+                  <div className="flex justify-between">
+                    <Skeleton className="h-4 w-1/5" />
+                    <div className="flex justify-end items-center gap-2 flex-grow">
+                      <Skeleton className="w-8 h-8 rounded-full" />
+                      <Skeleton className="h-4 w-1/4" />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="h-[160px] w-full overflow-hidden flex items-center justify-center rounded-md">
-                <Skeleton className="h-full w-full rounded-md" />
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Skeleton className="h-4 w-10 rounded-md" />
-                <Skeleton className="h-4 w-10 rounded-md" />
-                <Skeleton className="h-4 w-10 rounded-md" />
-              </div>
+                <div className="h-[160px] w-full overflow-hidden flex items-center justify-center rounded-md">
+                  <Skeleton className="h-full w-full rounded-md" />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Skeleton className="h-4 w-10 rounded-md" />
+                  <Skeleton className="h-4 w-10 rounded-md" />
+                  <Skeleton className="h-4 w-10 rounded-md" />
+                </div>
 
-              <div className=" flex justify-between">
-                <Skeleton className="w-1/3 h-5 rounded-md" />
-                <Skeleton className="w-1/5 h-5 rounded-md" />
-              </div>
+                <div className=" flex justify-between">
+                  <Skeleton className="w-1/3 h-5 rounded-md" />
+                  <Skeleton className="w-1/5 h-5 rounded-md" />
+                </div>
 
-              <div className="flex justify-end gap-4 pt-2">
-                <Skeleton className="h-10 w-10 rounded-md" />
-                <Skeleton className="h-10 w-10 rounded-md" />
-                <Skeleton className="h-10 w-10 rounded-md" />
+                <div className="flex justify-end gap-4 pt-2">
+                  <Skeleton className="h-10 w-10 rounded-md" />
+                  <Skeleton className="h-10 w-10 rounded-md" />
+                  <Skeleton className="h-10 w-10 rounded-md" />
+                </div>
               </div>
-            </div>
-          ))}
-        {data &&
-          data?.map((blog) => <BlogCard key={blog.id} blogData={blog} />)}
-      </div>
+            ))}
+          {data &&
+            data?.map((blog) => <BlogCard key={blog.id} blogData={blog} />)}
+        </div>
+      )}
     </div>
   );
 };
