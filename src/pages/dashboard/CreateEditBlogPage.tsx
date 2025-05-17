@@ -114,6 +114,7 @@ const CreateEditBlogPage = () => {
       createMutation.mutate(data, {
         onSuccess: () => {
           toast.success("Blog Created Successfully");
+          clear();
           navigate(routes.blogs.home);
         },
         onError: () => {

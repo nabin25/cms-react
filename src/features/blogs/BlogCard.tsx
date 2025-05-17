@@ -120,18 +120,18 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
           <div className="flex flex-wrap gap-2 mt-2">
             {(() => {
               const trimmedTags = tags.map((tag) =>
-                tag.length > 15 ? tag.slice(0, 15) + ".." : tag
+                tag.length > 12 ? tag.slice(0, 12) + ".." : tag
               );
 
-              const visibleTags = trimmedTags.slice(0, 4);
-              const remainingCount = trimmedTags.length - 4;
+              const visibleTags = trimmedTags.slice(0, 3);
+              const remainingCount = trimmedTags.length - 3;
 
               return (
                 <div className="flex flex-wrap gap-2">
                   {visibleTags.map((tag, index) => (
                     <span
                       key={index}
-                      className="bg-gray-100 text-xs px-2 py-0.5 dark:bg-gray-800 rounded-md"
+                      className="bg-gray-100 text-[10px] px-1 py-0.5 dark:bg-gray-800 rounded-md"
                     >
                       {tag}
                     </span>
