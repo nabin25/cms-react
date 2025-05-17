@@ -1,6 +1,5 @@
 import type { IAuthor } from "../../types/author";
 import type { IBlog } from "../../types/blog";
-import { calculateAverageReadTime } from "../../utils/average-read-time";
 
 const PreviewBlog = ({
   content,
