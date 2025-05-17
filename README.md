@@ -1,54 +1,100 @@
-# React + TypeScript + Vite
+# Blog Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based admin panel for managing blog posts, authors, categories, and filtering content. Built with:
 
-Currently, two official plugins are available:
+- **Vite**
+- **React Router**
+- **TanStack Query**
+- **React Hook Form**
+- **Zod**
+- **Axios**
+- **ShadCN UI / TailwindCSS**
+- **Zustand** and **Persist** middleware for state management
+- **Vitest + React Testing Library** for testing
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Filter blogs by **title**, **tag**, **status** ,**author**, **category**
+- Save the form state for blogs as `Draft` every **5 seconds** and `Recover` the formstate from `localStorage` with `Confirmation Modal` to **discard** or **recover** the form.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Reusable `FormBuilder` component with **Markdown Editor** with `react-quill-new` with proper integration with `react-hook-form` for form state management and `zod` for validation.
+
+- **Dark** and **light** mode toggle with persistance in `localStorage`.
+
+- Drawer-based UI for filters on blog page
+
+- Pages for CRUD for **Authors**, **Categories**, and **Blogs**.
+- Confiramation on all mutation operations.
+
+- Modal based **Preview** for Blogs
+
+- Proper management of cache data with proper revalidation logic on `mutation operations`.
+
+- Pagination on all pages with (`page`, `limit`)
+
+- Authentication context with login/logout and localStorage persistence, and mockAPI for authentication.
+
+- Axios Interceptor to logout users when `403`(Forbidden) or `401`(Unauthorized) status codes are received.
+
+- Modular API structure using custom hooks (`useFetchAuthors`, `useFetchCategories`)
+
+- Fully typed with TypeScript
+
+---
+
+## Project Setup
+
+Follow these steps to get the project running locally.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/nabin25/cms-react.git
+cd cms-react
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Setup Environment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Rename `.env.example` on root of the project to `.env`
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Browse to <a href="https://mockapi.io">Mock api</a> and create resources **categories**, **authors**, **users** and **blogs** with the types mentioned under `types` folder.
+
+- This project uses two endpoints due to limitation on free tier. If you have pro tier, adjust accordingly. Replace the **URLS** in `.env`. Create **Users** and **Blogs** in first URL, **Categories** and **Authors** in second URL
+
+### 3. Install Dependencies
+
+```bash
+npm i
+```
+
+or if you are using `pnpm` then
+
+```bash
+pnpm install
+```
+
+### 3. Run the development server
+
+```bash
+npm run dev
+```
+
+or if you are using `pnpm` then
+
+```bash
+pnpm dev
+```
+
+Your server will be live on <a href="http://localhost:5173">http://localhost:5173</a>
+
+
+### 4. Deployment URL
+
+Browse to <a href="https://cms-react-seven.vercel.app">deployment url</a> and login with following credentials to check demo
+
+```
+email: davidwatson@gmail.com
+password: password
 ```
