@@ -10,7 +10,7 @@ const PreviewBlog = ({
   if (blogData) {
     return (
       <>
-        <div className="h-40 sticky top-0 w-full overflow-hidden flex items-center justify-center rounded-md ">
+        <div className="h-40 w-full overflow-hidden flex items-center justify-center rounded-md ">
           <img
             alt={blogData.title}
             className="h-full object-contain"

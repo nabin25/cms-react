@@ -1,4 +1,3 @@
-import React from "react";
 import type {
   Control,
   FieldErrors,
@@ -14,6 +13,7 @@ import { Button } from "../ui/button";
 import type { IFormItem } from "../../types/form";
 import { cn } from "../../lib/utils";
 import { useConfirmationModalStore } from "../../stores/useConfirmationModalStore";
+import type { ReactNode } from "react";
 
 const getColSize = (colSize?: number) => {
   switch (colSize) {
@@ -42,7 +42,7 @@ interface IFormBuilderProps {
   fields: IFormItem[];
   reset: UseFormReset<any>;
   getValues: UseFormGetValues<any>;
-  children?: React.ReactNode;
+  children?: ReactNode;
   isLoading?: boolean;
   type: "edit" | "create";
 }
