@@ -13,6 +13,7 @@ import { Label } from "../../components/ui/label";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { FunnelPlus } from "lucide-react";
+import { useState } from "react";
 
 const BlogFilter = () => {
   const { data: authorData } = useFetchAuthors();
@@ -33,6 +34,8 @@ const BlogFilter = () => {
   const author = params.get("author_id") ?? "";
   const category = params.get("category_id") ?? "";
 
+  const status = params.get("status") ?? "";
+
   const tag = params.get("tag") ?? "";
   const title = params.get("title") ?? "";
 
@@ -52,9 +55,10 @@ const BlogFilter = () => {
     setParams({});
   };
 
+  const [open, setOpen] = useState(false);
   return (
     <>
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
           <Button variant="outline">
             <FunnelPlus />
@@ -89,6 +93,24 @@ const BlogFilter = () => {
               }
             />
 
+            <Label className="mt-4">Search By Status</Label>
+            <select
+              value={status}
+              onChange={(e) =>
+                handleSetParams({
+                  fieldName: "status",
+                  changedValue: e.target.value,
+                })
+              }
+              className="w-full mt-2 border p-2 rounded-md"
+            >
+              <option value="" disabled selected>
+                Select Status
+              </option>
+              <option value="Published">Published</option>
+              <option value="Drafted">Drafted</option>
+            </select>
+
             <Label className="mt-4">Search By Author</Label>
             <select
               value={author}
@@ -100,6 +122,9 @@ const BlogFilter = () => {
               }
               className="w-full mt-2 border p-2 rounded-md"
             >
+              <option value="" disabled selected>
+                Select Author
+              </option>
               {authorOptions?.map((author) => (
                 <option key={author.value} value={author.value}>
                   {author.label}
@@ -118,6 +143,9 @@ const BlogFilter = () => {
               }
               className="w-full mt-2 border p-2 rounded-md"
             >
+              <option value="" disabled selected>
+                Select Category
+              </option>
               {categoryOptions?.map((category) => (
                 <option key={category.value} value={category.value}>
                   {category.label}
@@ -126,6 +154,9 @@ const BlogFilter = () => {
             </select>
           </SheetDescription>
           <SheetFooter>
+            <Button onClick={() => setOpen(false)} variant="outline">
+              Show results
+            </Button>
             <Button onClick={handleClearFilter} variant="destructive">
               Clear filter
             </Button>
