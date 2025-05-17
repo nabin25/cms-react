@@ -21,7 +21,7 @@ const AuthorsPage = () => {
 
   return (
     <>
-      <div className="flex py-5 sticky top-15 justify-between bg-white/30 dark:bg-black/10 backdrop-blur-md z-10">
+      <div className="flex sticky top-15 justify-between py-2 bg-white/40 dark:bg-black/40 backdrop-blur-md z-10 rounded-md pe-2">
         <PaginationComponent
           disableNext={!data || data.length !== parseInt(limit)}
         />

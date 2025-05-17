@@ -67,8 +67,12 @@ const SignInPage = () => {
               className="flex flex-col gap-5"
             >
               <h3 className="text-xl">
-                Sign in to your <span className="text-[#94288d]">Spell</span>
-                <span className="text-[#ff4504]">CMS</span>
+                Sign in to your{" "}
+                <strong>
+                  {" "}
+                  <span className="text-[#94288d]">Spell</span>
+                  <span className="text-[#ff4504]">CMS</span>
+                </strong>
               </h3>
               <FormField
                 control={form.control}

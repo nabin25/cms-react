@@ -36,7 +36,13 @@ const Sidebar = () => {
           </Button>
         </SheetTrigger>
         <SheetContent className="p-3" side="left">
-          <SheetTitle>SpellCMS Dashboard</SheetTitle>
+          <SheetTitle>
+            <strong className="text-lg">
+              <span className="text-[#94288d]">Spell</span>
+              <span className="text-[#ff4504]">CMS</span>
+            </strong>{" "}
+            Dashboard
+          </SheetTitle>
           <SheetDescription>
             <div className="flex flex-col gap-4">
               {myRoutes.map((singleRoute) => (
