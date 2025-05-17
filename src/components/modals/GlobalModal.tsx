@@ -9,7 +9,7 @@ export const GlobalModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={close}>
       <DialogTitle></DialogTitle>
-      <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-screen">
+      <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-[85vh] py-2">
         <h2 className="text-lg font-semibold">{title}</h2>
         {view}
         <DialogFooter>
