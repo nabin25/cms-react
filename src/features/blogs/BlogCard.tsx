@@ -21,6 +21,9 @@ import useDeleteBlog from "../../api/blogs/useDeleteBlog";
 import type { ICategory } from "../../types/category";
 import toast from "react-hot-toast";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import { Switch } from "../../components/ui/switch";
+import { useState } from "react";
+import useChangeBlogStatus from "../../api/blogs/useChangeBlogStatus";
 
 const BlogCard = ({ blogData }: { blogData: IBlog }) => {
   const deleteMutation = useDeleteBlog();
@@ -46,9 +49,51 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
   const tags: string[] = JSON.parse(blogData.tags);
   const categoryData: ICategory = JSON.parse(blogData.category);
 
+  const [isPublished, setIsPublished] = useState(
+    blogData.status === "Published"
+  );
+
+  const changeStatusMutation = useChangeBlogStatus();
+
+  const handleStatusConfirm = () => {
+    changeStatusMutation.mutate(
+      {
+        formData: { status: isPublished ? "Drafted" : "Published" },
+        id: blogData.id,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Blog Status Changed Successfully");
+          close();
+        },
+        onError: () => {
+          toast.error("Error changing status");
+          setIsPublished((prev) => !prev);
+          close();
+        },
+      }
+    );
+  };
+
+  const handleStatusCancel = () => {
+    close();
+    setIsPublished((prev) => !prev);
+  };
+
+  const handleStatusToggle = (checked: boolean) => {
+    setIsPublished(checked);
+    open(
+      handleStatusConfirm,
+      checked ? "publish" : "unpublish",
+      handleStatusCancel
+    );
+  };
+
   return (
     <Card className={cn("w-[350px]")}>
-      <LoadingOverlay isVisible={deleteMutation.isPending} />
+      <LoadingOverlay
+        isVisible={deleteMutation.isPending || changeStatusMutation.isPending}
+      />
       <CardHeader>
         <CardTitle>{blogData.title}</CardTitle>
         <div className="flex justify-between items-center gap-2 mt-1">
@@ -100,7 +145,21 @@ const BlogCard = ({ blogData }: { blogData: IBlog }) => {
               );
             })()}
           </div>
-          <p className="mt-2">Category: {categoryData.name}</p>
+          <div className="flex justify-between">
+            <p className="mt-2">
+              Category:{" "}
+              {categoryData?.name?.length > 15
+                ? `${categoryData.name.slice(0, 15)}...`
+                : categoryData?.name}
+            </p>
+            <div className="flex gap-2 items-center">
+              Published
+              <Switch
+                checked={isPublished}
+                onCheckedChange={handleStatusToggle}
+              />
+            </div>
+          </div>
         </CardDescription>
       </CardContent>
       <CardFooter>

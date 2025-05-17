@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
 type ModalStore = {
-  action?: "edit" | "create" | "delete" | "draft";
+  action?: "edit" | "create" | "delete" | "draft" | "publish" | "unpublish";
   onConfirm: (() => void) | null;
   isOpen: boolean;
   open: (
     onConfirm: () => void,
-    action?: "edit" | "create" | "delete" | "draft",
+    action?: "edit" | "create" | "delete" | "draft" | "publish" | "unpublish",
     onClose?: () => void
   ) => void;
   close: () => void;

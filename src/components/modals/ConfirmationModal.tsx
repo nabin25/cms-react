@@ -14,9 +14,13 @@ export const ConfirmationModal = () => {
       <DialogTitle></DialogTitle>
       <DialogContent>
         <h2 className="text-lg font-semibold">
-          {action !== "draft"
-            ? `Confirm ${action ?? "action"}`
-            : "Recover Blog Draft"}{" "}
+          {action === "draft"
+            ? "Recover Blog Draft"
+            : action === "publish"
+              ? "Publish blog"
+              : action === "unpublish"
+                ? "Unpublish blog"
+                : `Confirm ${action ?? "action"}`}
           ?
         </h2>
         <div className="flex justify-center">
@@ -41,17 +45,27 @@ export const ConfirmationModal = () => {
             <></>
           )}
         </div>
-
-        {action !== "draft" ? (
-          <p className="text-sm text-muted-foreground text-center">
-            Please confirm if you want to proceed.
-          </p>
-        ) : (
+        {action === "draft" ? (
           <p className="text-sm text-muted-foreground text-center">
             Cancelling will permanantly remove the draft and cannot be
             recovered.
           </p>
+        ) : action === "publish" ? (
+          <p className="text-sm text-muted-foreground text-center">
+            Are you sure you want to publish this blog? It will be visible to
+            other users.
+          </p>
+        ) : action === "unpublish" ? (
+          <p className="text-sm text-muted-foreground text-center">
+            Are you sure you want to unpublish this blog? It will not be visible
+            to other users.
+          </p>
+        ) : (
+          <p className="text-sm text-muted-foreground text-center">
+            Please confirm if you want to proceed.
+          </p>
         )}
+
         <DialogFooter className="mt-4">
           <Button variant="outline" onClick={onClose ?? close}>
             Cancel

@@ -45,7 +45,7 @@ const HomePage = () => {
                   <Skeleton className="h-4 w-1/5" />
                   <div className="flex justify-end items-center gap-2 flex-grow">
                     <Skeleton className="w-8 h-8 rounded-full" />
-                    <Skeleton className="h-4 w-1/3" />
+                    <Skeleton className="h-4 w-1/4" />
                   </div>
                 </div>
               </div>
@@ -59,7 +59,10 @@ const HomePage = () => {
                 <Skeleton className="h-4 w-10 rounded-md" />
               </div>
 
-              <Skeleton className="w-1/3 h-5 rounded-md" />
+              <div className=" flex justify-between">
+                <Skeleton className="w-1/3 h-5 rounded-md" />
+                <Skeleton className="w-1/5 h-5 rounded-md" />
+              </div>
 
               <div className="flex justify-end gap-4 pt-2">
                 <Skeleton className="h-10 w-10 rounded-md" />
