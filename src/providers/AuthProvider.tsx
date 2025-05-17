@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 interface IUser {
@@ -50,10 +51,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
+    setAuthState({ user: null, token: null });
+
     navigate("/auth/sign-in");
     client.clear();
     setTimeout(() => {
-      console.log("Logged out successufully");
+      toast.success("Logged out successufully");
     }, 100);
   };
 

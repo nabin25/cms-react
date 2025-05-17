@@ -32,7 +32,7 @@ const SignInPage = () => {
   const { login, user, token } = useAuth();
 
   if (user || token) {
-    <Navigate to={"/"} />;
+    return <Navigate to={"/"} />;
   }
 
   const onSubmit = (data: ILoginData) => {
