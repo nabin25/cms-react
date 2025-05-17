@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateSecondApi from "../useCreateSecondApi";
 import type { ICategory } from "../../types/category";
+import useCreateApi from "../useCreateApi";
 
 const getCategories = async ({
   api,
@@ -15,7 +15,7 @@ const getCategories = async ({
 };
 
 const useFetchCategories = () => {
-  const api = useCreateSecondApi();
+  const api = useCreateApi({ mockUrl: "second" });
 
   const result = useQuery({
     queryKey: ["categories"],

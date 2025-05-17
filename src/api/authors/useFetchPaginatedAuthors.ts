@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateSecondApi from "../useCreateSecondApi";
 import type { IAuthor } from "../../types/author";
 import { useSearchParams } from "react-router-dom";
+import useCreateApi from "../useCreateApi";
 
 const getAuthors = async ({
   api,
@@ -20,7 +20,7 @@ const getAuthors = async ({
 };
 
 const useFetchPaginatedAuthors = () => {
-  const api = useCreateSecondApi();
+  const api = useCreateApi({ mockUrl: "second" });
   const [params] = useSearchParams();
 
   const page = params.get("page") ?? "1";

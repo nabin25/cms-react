@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateFirstApi from "../useCreateFirstApi";
+import useCreateApi from "../useCreateApi";
 
 type FormData = {
   status: "Published" | "Drafted";
@@ -16,7 +16,7 @@ const changeStatus = async (
 };
 
 const useChangeBlogStatus = () => {
-  const api = useCreateFirstApi();
+  const api = useCreateApi({ mockUrl: "first" });
   const client = useQueryClient();
 
   const mutation = useMutation({

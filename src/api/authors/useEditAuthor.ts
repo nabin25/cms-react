@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateSecondApi from "../useCreateSecondApi";
 import type { AuthorType } from "../../schemas/author.schema";
+import useCreateApi from "../useCreateApi";
 
 const editAuthor = async (data: AuthorType, id: string, api: AxiosInstance) => {
   const route = `/authors/` + id;
@@ -10,7 +10,7 @@ const editAuthor = async (data: AuthorType, id: string, api: AxiosInstance) => {
 };
 
 const useEditAuthor = () => {
-  const api = useCreateSecondApi();
+  const api = useCreateApi({ mockUrl: "second" });
   const client = useQueryClient();
 
   const mutation = useMutation({

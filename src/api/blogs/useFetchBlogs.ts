@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
 import { useSearchParams } from "react-router-dom";
 import type { IBlog } from "../../types/blog";
-import useCreateFirstApi from "../useCreateFirstApi";
 import useDebounce from "../../hooks/useDebounce";
+import useCreateApi from "../useCreateApi";
 
 const getBlogs = async ({
   api,
@@ -31,7 +31,7 @@ const getBlogs = async ({
 };
 
 const useFetchBlogs = () => {
-  const api = useCreateFirstApi();
+  const api = useCreateApi({ mockUrl: "first" });
   const [params] = useSearchParams();
 
   const page = params.get("page") ?? "1";

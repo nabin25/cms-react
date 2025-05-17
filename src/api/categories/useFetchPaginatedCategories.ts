@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateSecondApi from "../useCreateSecondApi";
 import type { ICategory } from "../../types/category";
 import { useSearchParams } from "react-router-dom";
+import useCreateApi from "../useCreateApi";
 
 const getCategories = async ({
   api,
@@ -20,7 +20,7 @@ const getCategories = async ({
 };
 
 const useFetchPaginatedCategories = () => {
-  const api = useCreateSecondApi();
+  const api = useCreateApi({ mockUrl: "second" });
 
   const [params] = useSearchParams();
 

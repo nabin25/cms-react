@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateFirstApi from "../useCreateFirstApi";
 import type { BlogData } from "../../schemas/blog.schema";
 import useBlogFormData from "../../hooks/useBlogFormData";
 import type { ICategory } from "../../types/category";
 import type { IAuthor } from "../../types/author";
+import useCreateApi from "../useCreateApi";
 
 const createBlog = async (
   data: BlogData,
@@ -28,7 +28,7 @@ const createBlog = async (
 };
 
 const useCreateBlog = () => {
-  const api = useCreateFirstApi();
+  const api = useCreateApi({ mockUrl: "first" });
   const client = useQueryClient();
   const { categoryData, authorData } = useBlogFormData();
 

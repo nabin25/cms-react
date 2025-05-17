@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useAuth } from "../providers/AuthProvider";
 
-const useCreateFirstApi = () => {
+const useCreateApi = ({ mockUrl }: { mockUrl: "first" | "second" }) => {
   const token = localStorage.getItem("token");
   const { logout } = useAuth();
 
   const api = axios.create({
-    baseURL: import.meta.env.VITE_FIRST_MOCK_ENDPOINT + "/api",
+    baseURL:
+      mockUrl === "first"
+        ? import.meta.env.VITE_FIRST_MOCK_ENDPOINT
+        : import.meta.env.VITE_SECOND_MOCK_ENDPOINT + "/api",
   });
 
   api.interceptors.request.use(function (config) {
@@ -32,4 +35,4 @@ const useCreateFirstApi = () => {
   return api;
 };
 
-export default useCreateFirstApi;
+export default useCreateApi;

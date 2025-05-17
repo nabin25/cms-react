@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateFirstApi from "../useCreateFirstApi";
 import type { IBlog } from "../../types/blog";
+import useCreateApi from "../useCreateApi";
 
 const getAuthors = async ({
   api,
@@ -21,7 +21,7 @@ const getAuthors = async ({
 };
 
 const useFetchBlogById = ({ id }: { id?: string }) => {
-  const api = useCreateFirstApi();
+  const api = useCreateApi({ mockUrl: "first" });
 
   const result = useQuery({
     queryKey: ["blogs", id],

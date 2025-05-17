@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosInstance } from "axios";
-import useCreateSecondApi from "../useCreateSecondApi";
+import useCreateApi from "../useCreateApi";
 
 const deleteAuthor = async (id: string, api: AxiosInstance) => {
   const route = `/authors/${id}`;
@@ -10,7 +10,7 @@ const deleteAuthor = async (id: string, api: AxiosInstance) => {
 };
 
 const useDeleteAuthor = () => {
-  const api = useCreateSecondApi();
+  const api = useCreateApi({ mockUrl: "second" });
   const client = useQueryClient();
 
   const mutation = useMutation({
