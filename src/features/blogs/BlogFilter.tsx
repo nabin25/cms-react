@@ -53,6 +53,7 @@ const BlogFilter = () => {
 
   const handleClearFilter = () => {
     setParams({});
+    setOpen(false);
   };
 
   const [open, setOpen] = useState(false);
