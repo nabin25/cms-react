@@ -16,6 +16,8 @@ A React-based admin panel for managing blog posts, authors, categories, and filt
 
 ## Features
 
+- Sign in and sign up new user with **MockAPI**
+
 - Filter blogs by **title**, **tag**, **status** ,**author**, **category**
 - Save the form state for blogs as `Draft` every **5 seconds** and `Recover` the formstate from `localStorage` with `Confirmation Modal` to **discard** or **recover** the form.
 
@@ -88,7 +90,6 @@ pnpm dev
 ```
 
 Your server will be live on <a href="http://localhost:5173">http://localhost:5173</a>
-
 
 ### 4. Deployment URL
 

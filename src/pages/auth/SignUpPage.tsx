@@ -72,6 +72,34 @@ const SignUpPage = () => {
     );
   };
 
+  const getStrength = () => {
+    const password = form.watch("password");
+    if (!password) return { strength: 0, text: "", color: "" };
+
+    let strength = 0;
+    if (password.length >= 8) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[a-z]/.test(password)) strength += 1;
+    if (/[0-9]/.test(password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+    const strengthMap = [
+      { text: "Very weak", color: "bg-red-500" },
+      { text: "Weak", color: "bg-orange-500" },
+      { text: "Medium", color: "bg-yellow-500" },
+      { text: "Strong", color: "bg-blue-500" },
+      { text: "Very strong", color: "bg-green-500" },
+    ];
+
+    return {
+      strength: (strength / 5) * 100,
+      text: strengthMap[strength - 1]?.text || "",
+      color: strengthMap[strength - 1]?.color || "",
+    };
+  };
+
+  const passwordStrength = getStrength();
+
   return (
     <>
       <div className="w-full h-[100svh] flex items-center justify-center">
@@ -157,6 +185,61 @@ const SignUpPage = () => {
                           type="password"
                         />
                       </FormControl>
+                      {form?.formState?.dirtyFields.password &&
+                        form.watch("password") && (
+                          <div className="mt-2">
+                            <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full ${passwordStrength.color}`}
+                                style={{
+                                  width: `${passwordStrength.strength}%`,
+                                }}
+                              ></div>
+                            </div>
+                            <p className="text-xs mt-1">
+                              {passwordStrength.text || "Password strength"}
+                            </p>
+                          </div>
+                        )}
+
+                      <ul className="text-xs text-gray-500 mt-1 space-y-1">
+                        <li
+                          className={
+                            form.watch("password")?.length >= 8
+                              ? "text-green-500"
+                              : ""
+                          }
+                        >
+                          • At least 8 characters
+                        </li>
+                        <li
+                          className={
+                            /[A-Z]/.test(form.watch("password") || "")
+                              ? "text-green-500"
+                              : ""
+                          }
+                        >
+                          • At least one uppercase letter
+                        </li>
+                        <li
+                          className={
+                            /[a-z]/.test(form.watch("password") || "")
+                              ? "text-green-500"
+                              : ""
+                          }
+                        >
+                          • At least one lowercase letter
+                        </li>
+                        <li
+                          className={
+                            /[0-9]/.test(form.watch("password") || "")
+                              ? "text-green-500"
+                              : ""
+                          }
+                        >
+                          • At least one number
+                        </li>
+                      </ul>
                       {form?.formState?.errors?.password && (
                         <p className="text-sm text-red-500 flex items-center mt-1">
                           <AlertCircle className="h-3 w-3 mr-1" />
