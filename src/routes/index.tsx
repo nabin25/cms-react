@@ -6,6 +6,8 @@ import AuthorsPage from "../pages/dashboard/AuthorsPage";
 import CategoryPage from "../pages/dashboard/CategoryPage";
 import SignInPage from "../pages/auth/SignInPage";
 import { useEffect } from "react";
+import AuthRoute from "./AuthRoute";
+import SignUpPage from "../pages/auth/SignUpPage";
 
 const RoutesComponent = () => {
   const [params] = useSearchParams();
@@ -25,7 +27,10 @@ const RoutesComponent = () => {
           <Route path="/authors" element={<AuthorsPage />} />
           <Route path="/categories" element={<CategoryPage />} />
         </Route>
-        <Route path="auth/sign-in" element={<SignInPage />}></Route>
+        <Route element={<AuthRoute />}>
+          <Route path="auth/sign-in" element={<SignInPage />} />
+          <Route path="auth/sign-up" element={<SignUpPage />} />
+        </Route>
       </Routes>
     </>
   );

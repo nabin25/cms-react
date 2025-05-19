@@ -3,6 +3,7 @@ import { useAuth } from "../providers/AuthProvider";
 import Navbar from "../components/layout/Navbar";
 import { ConfirmationModal } from "../components/modals/ConfirmationModal";
 import { GlobalModal } from "../components/modals/GlobalModal";
+import routes from "./routes";
 
 const ProtectedRoute = () => {
   const { token, user } = useAuth();
@@ -19,7 +20,7 @@ const ProtectedRoute = () => {
       </div>
     </>
   ) : (
-    <Navigate to="/auth/sign-in" />
+    <Navigate to={routes.auth.signIn} />
   );
 };
 export default ProtectedRoute;

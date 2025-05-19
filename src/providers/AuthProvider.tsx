@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import routes from "../routes/routes";
 
 interface IUser {
   full_name: string;
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setAuthState({ user: null, token: null });
 
-    navigate("/auth/sign-in");
+    navigate(routes.auth.signIn);
     client.clear();
     setTimeout(() => {
       toast.success("Logged out successufully");

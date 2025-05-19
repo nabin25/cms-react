@@ -1,0 +1,236 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "../../components/ui/form";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
+import { AlertCircle, CheckCircle, Loader2, WandSparkles } from "lucide-react";
+import {
+  signUpSchema,
+  type ISignUpFormValues,
+} from "../../schemas/signUp.schema";
+import useCheckAccountAvailability from "../../api/auth/useCheckAccountAvailability";
+import { hashPassword } from "../../utils/hash-password";
+import useCreateAccount from "../../api/auth/useCreateAccount";
+import { useNavigate } from "react-router-dom";
+import routes from "../../routes/routes";
+
+const SignUpPage = () => {
+  const form = useForm<ISignUpFormValues>({
+    resolver: zodResolver(signUpSchema),
+    mode: "onChange",
+  });
+
+  const checkAccountMutation = useCheckAccountAvailability();
+
+  const createAccountMutation = useCreateAccount();
+
+  useEffect(() => {
+    document.title = "SignUp-SpellCMS";
+  }, []);
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: ISignUpFormValues) => {
+    checkAccountMutation.mutate(
+      { email: data.email },
+      {
+        onSuccess: (data) => {
+          if (data && data.length > 0) {
+            toast.error("Email already in use!");
+          }
+        },
+        onError: async () => {
+          console.log("Error occured");
+          const hashed = await hashPassword(data.password);
+
+          createAccountMutation.mutate(
+            {
+              email: data.email,
+              full_name: data.full_name,
+              password: hashed,
+            },
+            {
+              onSuccess: () => {
+                toast.success("Account created successfully");
+                navigate(routes.auth.signIn);
+              },
+              onError: () => {
+                toast.error("Error creating user");
+              },
+            }
+          );
+        },
+      }
+    );
+  };
+
+  return (
+    <>
+      <div className="w-full h-[100svh] flex items-center justify-center">
+        <div className="max-w-[500px] md:min-w-[500px] w-full p-3">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-2 rounded-lg justify-center"
+            >
+              <div className="flex gap-2 text-xl justify-center mb-2">
+                <WandSparkles className="text-[#94288d]" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#94288d] to-[#ff4504] font-bold">
+                  SpellCMS
+                </span>
+              </div>
+              <h3 className="text-2xl text-center">Create an Account</h3>
+              <p className="text-center mb-2">
+                Enter your details to setup an account.
+              </p>
+              <div className="flex flex-col gap-5 py-3 lg:py-6 px-5 lg:px-10 rounded-lg  bg-[#fdfaf7] dark:bg-[#242424] border border-black/20 dark:border-white/20 border-solid shadow-lg">
+                <FormField
+                  control={form.control}
+                  name="full_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-lg">Full Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your full name" {...field} />
+                      </FormControl>
+                      {form?.formState?.errors?.full_name && (
+                        <p className="text-sm text-red-500 flex items-center mt-1">
+                          <AlertCircle className="h-3 w-3 mr-1" />
+                          {form?.formState?.errors?.full_name?.message}
+                        </p>
+                      )}
+                      {form?.formState?.dirtyFields?.full_name &&
+                        !form?.formState?.errors.full_name && (
+                          <p className="text-sm text-green-500 flex items-center mt-1">
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                            Name looks good!
+                          </p>
+                        )}
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-lg">Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your Email" {...field} />
+                      </FormControl>
+                      {form?.formState?.errors?.email && (
+                        <p className="text-sm text-red-500 flex items-center mt-1">
+                          <AlertCircle className="h-3 w-3 mr-1" />
+                          {form?.formState?.errors?.email?.message}
+                        </p>
+                      )}
+                      {form?.formState?.dirtyFields?.email &&
+                        !form?.formState?.errors.email && (
+                          <p className="text-sm text-green-500 flex items-center mt-1">
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                            Valid email format!
+                          </p>
+                        )}
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-lg">Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your password"
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      {form?.formState?.errors?.password && (
+                        <p className="text-sm text-red-500 flex items-center mt-1">
+                          <AlertCircle className="h-3 w-3 mr-1" />
+                          {form?.formState?.errors?.password?.message}
+                        </p>
+                      )}
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-lg">
+                        Confirm Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Confirm your password"
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      {form?.formState?.errors?.confirmPassword && (
+                        <p className="text-sm text-red-500 flex items-center mt-1">
+                          <AlertCircle className="h-3 w-3 mr-1" />
+                          {form?.formState?.errors?.confirmPassword?.message}
+                        </p>
+                      )}
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="submit"
+                  disabled={
+                    createAccountMutation?.isPending ||
+                    checkAccountMutation?.isPending
+                  }
+                >
+                  {checkAccountMutation?.isPending ||
+                  createAccountMutation?.isPending ? (
+                    <>
+                      {checkAccountMutation?.isPending
+                        ? "Checking account availability"
+                        : "Creating Account"}
+                      <Loader2 className="animate-spin" />
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              </div>
+
+              <p className="text-center">
+                Already have an account.{" "}
+                <a
+                  className="text-[#94288d] cursor-pointer "
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(routes.auth.signIn);
+                  }}
+                >
+                  Login{" "}
+                </a>
+              </p>
+            </form>
+          </Form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default SignUpPage;

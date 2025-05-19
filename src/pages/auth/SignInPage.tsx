@@ -13,10 +13,12 @@ import {
   FormItem,
   FormLabel,
 } from "../../components/ui/form";
-import { Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { AlertCircle, CheckCircle, Loader2, WandSparkles } from "lucide-react";
+import { hashPassword } from "../../utils/hash-password";
+import { useNavigate } from "react-router-dom";
+import routes from "../../routes/routes";
 
 type ILoginData = z.infer<typeof loginSchema>;
 
@@ -32,24 +34,12 @@ const SignInPage = () => {
     document.title = "SignIn-SpellCMS";
   }, []);
 
-  const { login, user, token } = useAuth();
+  const { login } = useAuth();
 
-  if (user || token) {
-    return <Navigate to={"/"} />;
-  }
+  const navigate = useNavigate();
 
   const onSubmit = async (data: ILoginData) => {
-    async function hashPassword(password: string): Promise<string> {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(password);
-      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-      return Array.from(new Uint8Array(hashBuffer))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-    }
-
     const hashed = await hashPassword(data.password);
-
     loginMutation?.mutate(
       { ...data, password: hashed },
       {
@@ -76,7 +66,7 @@ const SignInPage = () => {
   };
   return (
     <>
-      <div className="w-full h-[100svh] flex items-center justify-center">
+      <div className="w-full h-[100svh] flex items-center justify-center animate-in">
         <div className="max-w-[500px] md:min-w-[500px] w-full p-3">
           <Form {...form}>
             <form
@@ -151,6 +141,20 @@ const SignInPage = () => {
                   )}
                 </Button>
               </div>
+
+              <p className="text-center">
+                Don't have an account.{" "}
+                <a
+                  className="text-[#94288d] cursor-pointer "
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(routes.auth.signUp);
+                  }}
+                >
+                  Sign up{" "}
+                </a>
+                with dummy email.
+              </p>
             </form>
           </Form>
         </div>
