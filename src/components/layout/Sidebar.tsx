@@ -37,10 +37,9 @@ const Sidebar = () => {
         </SheetTrigger>
         <SheetContent className="p-3" side="left">
           <SheetTitle>
-            <strong className="text-lg">
-              <span className="text-[#94288d]">Spell</span>
-              <span className="text-[#ff4504]">CMS</span>
-            </strong>{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#94288d] to-[#ff4504] font-bold">
+              SpellCMS
+            </span>{" "}
             Dashboard
           </SheetTitle>
           <SheetDescription>

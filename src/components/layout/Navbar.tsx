@@ -18,8 +18,9 @@ const Navbar = () => {
               className="text-xl font-bold text-black dark:text-white cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <span className="text-[#94288d]">Spell</span>
-              <span className="text-[#ff4504]">CMS</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#94288d] to-[#ff4504] font-bold">
+                SpellCMS
+              </span>
             </div>
           </div>
 
