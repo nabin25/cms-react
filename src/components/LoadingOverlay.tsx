@@ -1,18 +1,29 @@
+import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
+import { WandSparkles } from "lucide-react";
+
 const LoadingOverlay = ({ isVisible }: { isVisible: boolean }) => {
-  return (
-    <>
-      {isVisible && (
-        <div className="w-screen h-[500vh] bg-gray-700/40 dark:bg-gray-700/20 z-[100000] top-0 left-0 fixed ">
-          <div className="z-[100000] flex items-center justify-center w-screen h-screen fixed top-0 left-0">
-            <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-accent-dark dark:border-white"></div>
-            <h4 className="text-xl font-bold">
-              <span className="text-[#94288d]">Spell</span>
-              <span className="text-[#ff4504]">CMS</span>
-            </h4>
-          </div>
-        </div>
-      )}
-    </>
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!isVisible || !mounted) return null;
+
+  return createPortal(
+    <div className="w-screen h-[500vh] bg-gray-700/40 dark:bg-gray-700/20 z-[100000] fixed top-0 left-0">
+      <div className="z-[100001] flex items-center justify-center w-screen h-screen fixed top-0 left-0">
+        <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-accent-dark dark:border-white"></div>
+        <h4 className="text-xl font-bold z-[100001] flex flex-col gap-2 items-center justify-center">
+          <WandSparkles className="text-[#94288d]" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#94288d] to-[#ff4504] font-bold">
+            SpellCMS
+          </span>
+        </h4>
+      </div>
+    </div>,
+    document.body
   );
 };
 
